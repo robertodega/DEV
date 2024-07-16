@@ -1,0 +1,163 @@
+#!/bin/bash
+
+#   paths
+#   -----
+backupScriptPath=/opt/lampp/htdocs/WWW/PROJECTS/Scripts/Bash/backup
+homePath=/home/roby
+docPath=$homePath/Documenti
+wwwPath=/opt/lampp/htdocs/WWW
+
+remotePath=/media/roby/1F26-0CA7
+remoteDocPath=$remotePath/Documenti
+remoteWWWPath=$remotePath/WWW
+
+#   labels
+#   ------
+separator="\n\n----------------------------------------------------------------------------------------------------------------------------------\n"
+errorLbl="\nYour choice is incorrect ..."
+quitLbl="\nThank you, bye bye! $separator"
+
+docBackupLbl="\n\n\t... $docPath ===> $remoteDocPath ... --- Continue? (y / n)"
+wwwBackupLbl="\n\n\t... $wwwPath ===> $remoteWWWPath ... --- Continue? (y / n)"
+backupLbl="\nBackup is beginning for"
+
+#   Variables
+#   ---------
+backupList=""
+
+#   Functions
+#   ---------
+folderBackup () {
+    echo -e "$backupLbl $1\n"
+    case $1 in
+        "$docPath")
+            #   ---------
+            #   Documenti
+            #   ---------
+            for file in $docPath/*; do
+                echo -e "\t... $file ===> $remoteDocPath/$(basename "$file") ... --- Continue? (y / n)"
+                read continueChoice
+                
+                if [[ $continueChoice == 'y' ]]
+                then
+                    cp -r $file $remoteDocPath
+                    backupList+="\n$remoteDocPath$(basename "$file")"
+                fi
+            done
+
+            #   ----------
+            #   Home files
+            #   ----------
+            if [ -d "$remotePath/Home" ]; then
+                echo ""
+            else
+                echo -e "\n\n\t... Creating $remotePath/Home folder ..."
+                mkdir "$remotePath/Home"
+            fi
+            echo -e "\t... $homePath ===> $remotePath/Home ... --- Continue? (y / n)"
+            read continueChoice
+            if [[ $continueChoice == 'y' ]]
+            then
+                #   ----------
+                #   bash files
+                #   ----------
+                echo -e "\n\n\t... Copying bash files ...\n"
+                cp $homePath/".bash_aliases" "$remotePath/Home"
+                backupList+="\n$remotePath/Home/.bash_aliases"
+                cp $homePath/".bash_history" "$remotePath/Home"
+                backupList+="\n$remotePath/Home/.bash_history"
+                cp $homePath/".bash_logout" "$remotePath/Home"
+                backupList+="\n$remotePath/Home/.bash_logout"
+                cp $homePath/".bashrc" "$remotePath/Home"
+                backupList+="\n$remotePath/Home/.bashrc"
+                #   -----------
+                #   thunderbird
+                #   -----------
+                echo -e "\n\t... Copying thunderbird files ...\n"
+                cp -r $homePath/".thunderbird" "$remotePath/Home"
+                backupList+="\n$remotePath/.thunderbird"
+            fi
+            ;;
+        "$wwwPath")
+            for file in $wwwPath/*; do
+
+                if [[ $(basename "$file") == 'PROJECTS' ]]
+                then
+
+                    for subfile in $file/*; do
+                        echo -e "\t... $subfile ===> $remoteWWWPath/$(basename "$file")/$(basename "$subfile") ... --- Continue? (y / n)"
+                        read continueChoice
+                        
+                        if [[ $continueChoice == 'y' ]]
+                        then
+                            sudo cp -r $subfile $remoteWWWPath/$(basename "$file")/$(basename "$subfile")
+                            backupList+="\n$remoteWWWPath/$(basename "$file")/$subfile"
+                        fi
+                    done
+
+                else
+
+                    echo -e "\n\t... $file ===> $remoteWWWPath/$(basename "$file") ... --- Continue? (y / n)"
+                    read continueChoice
+                    
+                    if [[ $continueChoice == 'y' ]]
+                    then
+                        cp -r $file $remoteWWWPath
+                        backupList+="\n$remoteWWWPath$(basename "$file")"
+                    fi
+
+                fi
+
+            done
+            ;;
+    esac
+}
+
+#   Execution
+#   ---------
+clear
+
+if [ -d "$remotePath" ]; then
+
+    #   ---------
+    #   Documenti
+    #   ---------
+    echo -e $docBackupLbl
+    echo -e "\n"
+    read docChoice
+    case $docChoice in
+        'y')
+            folderBackup "$docPath"
+            ;;
+        'n')
+            echo -e ""
+            ;;
+        *)
+            folderBackup "$docPath"
+            ;;
+    esac
+
+    #   ---
+    #   WWW
+    #   ---
+    echo -e $wwwBackupLbl
+    echo -e "\n"
+    read wwwChoice
+    case $wwwChoice in
+        'y')
+            folderBackup "$wwwPath"
+                ;;
+        'n')
+            clear
+            echo -e $quitLbl
+            ;;
+        *)
+            folderBackup "$wwwPath"
+            ;;
+    esac
+
+    echo -e "BackupList:\n\n$backupList $separator"
+
+else
+    echo -e "\n\nBackup resource\n\n\t$remotePath\n\nis NOT mounted\n\n"
+fi

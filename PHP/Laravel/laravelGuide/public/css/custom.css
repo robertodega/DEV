@@ -1,0 +1,25 @@
+body{background-color: grey;overflow:hidden;background-image: url('/img/bck.png');}
+.clearDiv{clear:both;}
+.headerDiv{padding:1%;font-size:1.5em;text-align:center;color: white;}
+.footerDiv{padding:1%;font-size:1em;text-align:center;text-decoration:underline;color: white;}
+.containerSubDiv{float:left;padding:2%;height:800px;overflow: auto;}
+.containerLeftDiv{width:20%;background-color: orange;color:black;box-shadow: 5px 8px #000000;}
+.containerRightDiv{width:79%;margin-left:1%;background-color: black;color:white;}
+.containerTitle{float:left;}
+.containerSubDivTitle{font-size:2em;}
+.containerSubDivSubTitle{font-size:1.5em;margin-left:2%;text-decoration:underline;}
+.containerSubDivContent{font-size:1em;}
+
+.listItemContainer{border-bottom:1px solid grey;margin:1%}
+.guideItem{list-style-type:none;}
+.guideItem a{text-decoration:none; color:orangered}
+.guideItem a:hover{text-decoration:underline; color:black}
+.selected a{text-decoration:underline; color:black}
+
+.guideDiv{margin-top:1%;}
+.guideTxtDiv{background-color:grey;padding:1%;color:black;}
+.guideContentDiv{background-color:whitesmoke;padding:1%;color:black;max-height:250px;overflow:auto;}
+.cmdLi{color:darkblue;margin-left:1%;cursor:pointer;}
+.respCodeDiv{color:grey;padding-left:2%;}
+.suggestionLi{color:darkgreen;padding-left:2%;}
+.liTitle{font-size:1.5em;font-weight:bold;}

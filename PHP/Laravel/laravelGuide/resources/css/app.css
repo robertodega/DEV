@@ -1,0 +1,5 @@
+body{background-color: grey;}
+.clearDiv{clear:both;}
+.containerSubDiv{float:left;}
+.containerLeftDiv{width:20%;background-color: orange;color:black;}
+.containerRightDiv{width:75%;background-color: black;color:white;}

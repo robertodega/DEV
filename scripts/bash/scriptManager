@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#   paths
+#   -----
+scriptPath=/opt/lampp/htdocs/WWW/PROJECTS/GitHub/scripts/bash
+managerPath=$scriptPath/scriptManager
+backupPath=$scriptPath/backup
+
+#   labels
+#   ------
+separator="\n\n----------------------------------------------------------------------------------------------------------------------------------\n"
+errorLbl="\nYour choice is incorrect ..."
+quitLbl="\nThank you, bye bye! $separator"
+headerLbl="\n================================================== SCRIPTS manager ===============================================================\n"
+actLbl="
+    \t1\tBackup Utility
+    \n\t0\tQUIT
+"
+footerLbl="\n==================================================================================================================================\n\n"
+
+#   Variables
+#   ---------
+
+#   Functions
+#   ---------
+
+#   Execution
+#   ---------
+clear
+
+echo -e $headerLbl
+echo -e $actLbl
+echo -e $footerLbl
+read choice
+
+case $choice in
+    1)
+        $backupPath
+        ;;
+    0)
+        clear
+        echo -e $quitLbl
+        ;;
+    *)
+        $managerPath
+        ;;
+esac
