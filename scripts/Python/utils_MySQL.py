@@ -1,3 +1,4 @@
+
 #   ----------------------------------------------------------------------------------------------
 #   $ mkdir folderName
 #   $ cd folderName
@@ -24,9 +25,9 @@ separator += "\n"
 byeTxt = "\n\nThank you, bye!\n\n"+separator
 
 searchedTerm = ''
-while searchedTerm != 'esc':
+while searchedTerm != 'x':
 
-    searchedTerm = input("\nSearch term ( type 'esc' to quit ):\n\n\t")
+    searchedTerm = input("\nSearch term ( type 'x' to quit ):\n\n\t")
 
     cursor = db.cursor()
 
@@ -40,14 +41,15 @@ while searchedTerm != 'esc':
     print()
 
     cursor.execute(qBody)
-    for x in cursor:
-        print('id:\t\t', x[0])
-        print('Subject:\t', x[1])
-        print('Username:\t', x[2])
-        print('Password:\t', x[3])
-        print('Note:\t\t', x[4])
-        print()
-        print()
+    if searchedTerm != 'x':
+        for c in cursor:
+            print('id:\t\t', c[0])
+            print('Subject:\t', c[1])
+            print('Username:\t', c[2])
+            print('Password:\t', c[3])
+            print('Note:\t\t', c[4])
+            print()
+            print()
 
 print(byeTxt)
 
