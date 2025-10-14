@@ -30,7 +30,7 @@
 
 - GitHub Repo Creation
 
-  - account access > New Repository ( github.com/new ) > Create repository ( without README initialization )
+  - account access > New Repository ( github.com/new ) [ same name of local Repo ] > Create repository ( without README initialization )
 
 - Local Repo
 
