@@ -1,3 +1,4 @@
+
 #       General 
 #       -------
 alias note='xdg-open '
@@ -30,8 +31,12 @@ alias apacheStop='clear && sudo systemctl stop apache2'
 #	-------
 alias laravel='clear && composer create-project laravel/laravel '
 
-#	POSTMAN
+#	PYTHON
 #	------
+alias python='clear && source venv/bin/activate && python3 app.py'
+
+#	POSTMAN
+#	-------
 alias postman='clear && /opt/lampp/htdocs/WWW/Postman/Postman'
 
 #	MYSQL
@@ -48,7 +53,9 @@ alias postgresRestart='clear && sudo systemctl restart postgresql'
 #       FOLDERS
 #       -------
 alias projdir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS && lsla'
+alias flaskDir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/Python/Flask && lsla'
+alias githubDir='clear && cd /opt/lampp/htdocs/WWW/GITHUB/DEV && lsla'
 alias laraveldir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/PHP/Laravel && lsla'
 alias smartydir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/PHP/Smarty && lsla'
-
-
+alias hdbackup='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/Bash && ./hdbackup.sh'
+alias torbrowser='clear && cd /home/roby/Scaricati/tor-browser && ./start-tor-browser.desktop'
