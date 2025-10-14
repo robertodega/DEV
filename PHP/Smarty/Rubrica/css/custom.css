@@ -1,0 +1,18 @@
+body{background-color: antiquewhite;}
+.clearDiv{clear: both;}
+.headerDiv{background-color: #f0f0f0; padding: 10px; text-align: center;font-weight: bold;}
+a{color: grey; text-decoration: none;}
+a:hover{color: #ff0000; text-decoration: underline;}
+.dataTable{margin-top: 2%;}
+.dataTableDiv{overflow: auto;}
+.datatd{background-color: beige;border-left: 1px solid grey;border-bottom: 1px solid grey;padding: 1%;float: left;overflow: auto;}
+.datatdTitle{font-weight: bold; background-color: aliceblue;border-top: 1px solid grey;}
+.dataLastTd{border-right: 1px solid grey;}
+.dataLastRow{border-bottom: 1px solid grey;}
+.formDiv{background-color: #f0f0f0; padding: 10px; margin-top: 2%; border-radius: 5px;}
+.searchedTermDiv{text-align: center;padding: 1%;border-bottom: 1px solid grey;}
+.formFieldDiv{border: 0px solid red;padding: 1%;}
+.formField{float: left;border: 0px solid blue;}
+.deleteBtn{float: right;cursor: pointer; color: red;}
+.editableData{cursor: pointer;}
+.editableData:hover{color: orangered;}

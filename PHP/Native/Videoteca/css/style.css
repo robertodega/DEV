@@ -1,0 +1,16 @@
+.clearDiv{clear: both;}
+.pageContainerDiv{width: 90%;margin-left: 5%;border: 1px solid salmon;}
+.videotecaBlockDiv{float: left;border: 1px solid grey;width: 45%;padding: 1%;}
+.filvContainer{overflow: auto;}
+.resultDiv{height: 20px;padding: 1%;color: darkblue;font-style: italic; background-color: blanchedalmond;cursor: pointer;}
+.videoListContainer{overflow: auto;}
+.filvContainer{border-bottom: 1px solid grey;margin: 1%;padding: 1%;}
+.tdCell{border-left:1px solid grey;border-top:1px solid grey;padding: 1%;float: left;text-align: center;}
+.tdCellLastRow{border-bottom:1px solid grey;}
+.tdCellLast{border-right:1px solid grey;}
+.tdCellTitle{background-color: yellow;color: brown;}
+.actionSpan{cursor: pointer;}
+#deleteSpan:hover{color: red;}
+#updateSpan:hover{color: orange;}
+.actLabelDiv{text-decoration: underline;border-bottom: 1px solid grey;margin-bottom: 10px;padding: 1%;font-size: large; font-weight: bold;}
+.changeFormBtn{cursor: pointer;}

@@ -1,0 +1,7 @@
+body{background-color: black;color: white;}
+.clearDiv{clear: both;}
+a{color: white;text-decoration: none;}
+a:hover{color: orange;}
+.currentSection{color: orange;}
+.menuNavDiv{border: 0px solid red;text-align: right;}
+.menuNavItem{float: right;border: 0px solid white;text-align: center;}
