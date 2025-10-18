@@ -2,6 +2,8 @@
 
 - mkdir users
 - cd users
+- mkdir static static/css static/js static/img templates
+- touch static/css/custom.css static/js/custom.js templates/add.html templates/add_result.html templates/search_result.html templates/users.html const.py queries.py users.py
 
 # virtual env set
 
