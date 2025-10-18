@@ -1,0 +1,19 @@
+{% if add_result %}
+<div class="report-div" id="add-result-data-div" title="Click to close">
+{% if add_result[0] == 'OK' %}
+    User has been correctly added:
+    {% for res in add_result: %}
+    {% if res != 'OK' %}
+    <li class="result_li">{{ res }}</li>
+    {% endif %}
+    {% endfor %}
+{% else %}
+    Error while trying to add user:
+    {% for res in add_result: %}
+    {% if res != 'KO' %}
+    <li class="result_li">{{ res }}</li>
+    {% endif %}
+    {% endfor %}
+{% endif %}
+</div>
+{% endif %}
