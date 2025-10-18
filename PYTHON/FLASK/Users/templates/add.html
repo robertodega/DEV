@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ page_title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+
+<body>
+    <section class="header-section" id="header">
+        <h1><a href="{{ utility_root_path }}">Users List</a></h1>
+    </section>
+    <section class="content-section" id="content-container">
+        <div class="box-container" id="form-container">
+            <form class="box-form" id="search-form" name="search-form" method="post" action="{{ utility_root_path }}">
+                <input type="text" class="form-control form-field" id="name_field" name="name_field" value="" placeholder="user name here" required />
+                <input type="password" class="form-control form-field" id="pwd_field" name="pwd_field" value="" placeholder="password value here" required />
+                <input type="text" class="form-control form-field" id="section_field" name="section_field" value="" placeholder="section value here" />
+                <input type="text" class="form-control form-field" id="note_field" name="note_field" value="" placeholder="note here" />
+                <input type="submit" class="btn btn-sm btn-primary" id="submit_btn" name="submit_btn" value="Add" placeholder="" />
+                <input type="reset" class="btn btn-sm btn-secondary" id="undo_btn" name="undo_btn" value="Undo" placeholder="" onclick="document.location.href='{{ utility_root_path }}'" />
+            </form>
+        </div>
+    </section>
+</body>
+</html>
+
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
