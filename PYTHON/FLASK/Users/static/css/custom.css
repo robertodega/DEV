@@ -1,0 +1,92 @@
+.header-section {
+  border: 0px solid red;
+  text-align: center;
+  padding: 10px;
+  background-color: beige;
+  color: brown;
+  text-transform: capitalize;
+  text-shadow: 2px 2px black;
+  box-shadow: 0px 0px 2px 2px black;
+
+  a {
+    text-decoration: none;
+    color: brown;
+  }
+  a:hover {
+    color: gold;
+  }
+}
+
+.content-section {
+  border: 0px solid red;
+  padding: 10px;
+  margin-top: 50px;
+
+  .box-container {
+    border: 0px solid red;
+    display: flex;
+
+    .box-form {
+      display: flex;
+      gap: 10px;
+      .form-field {
+        width: 600px;
+        cursor: pointer;
+        background-color: lightyellow;
+        color: darkblue;
+      }
+    }
+  }
+
+  .report-div {
+    border: 0px solid red;
+
+    &#statistic-data-div {
+      margin-left: 20px;
+    }
+
+    &#search-result-data-div {
+      margin-left: 20px;
+      padding: 2%;
+    }
+
+    &#add-result-data-div {
+      border: 1px solid brown;
+      width: 50%;
+      padding: 2%;
+      background-color: beige;
+      border-radius: 10px 10px 10px 10px;
+      box-shadow: 0px 0px 5px 5px black;
+      cursor: pointer;
+    }
+
+    .report-record-div {
+      display: flex;
+      .report-record-cell-div {
+        width: 250px;
+        border-left: 1px solid darkgray;
+        /* */
+        border-top: 1px solid darkgray;
+        /* */
+        text-align: center;
+        min-height: 50px;
+      }
+      .report-record-cell-div:last-child {
+        border-right: 1px solid darkgray;
+        /* *
+        border-bottom: 1px solid darkgray;
+        /* */
+      }
+    }
+    /* *
+    .report-record-div:last-child {
+      border-bottom: 1px solid darkgray;
+    }
+    /* */
+  }
+
+  .result_li {
+    color: brown;
+  }
+}
+  
