@@ -11,13 +11,13 @@
 
 -   Linux
     - source venv/bin/activate
+    - pip install flask mysql-connector-python
     - python3 users.py
 
 -   Windows (powershell)
     - .\venv\Scripts\activate
+    - pip install flask mysql-connector-python
     - python .\users.py
-
-- pip install flask mysql-connector-python
 
 # DB creation
 
