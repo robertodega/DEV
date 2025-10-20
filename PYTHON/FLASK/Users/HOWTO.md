@@ -8,7 +8,6 @@
 # virtual env set
 
 - python3 -m venv venv
-- pip install flask mysql-connector-python
 
 -   Linux
     - source venv/bin/activate
@@ -17,6 +16,8 @@
 -   Windows (powershell)
     - .\venv\Scripts\activate
     - python .\users.py
+
+- pip install flask mysql-connector-python
 
 # DB creation
 
