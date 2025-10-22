@@ -1,6 +1,5 @@
-
-- mkdir statistics
-- cd statistics
+- mkdir Statistics
+- cd Statistics
 - mkdir templates static static/css static/js static/img DB
 - touch templates/main.html templates/product_detail.html static/css/custom.css static/js/custom.js statistics.py const.py conn.py queries.py DB/statistics.sql
 - python3 -m venv venv
@@ -246,7 +245,7 @@
                                     <p class="product-created-at"><strong>Created At:</strong> {{ product.created_at }}</p>
                                 </div>
                                 <div class="product-block" id="product-card-img-div">
-                                    <img class="product-card-img" id="product-card-img-{{ loop.index }}" src="{{ url_for('static', filename='img/' + product.product_img) }}" alt="Image of {{ product.product_name }}" title="Click to see details for {{ product.product_name }}">
+                                    <img class="product-card-img" id="product-card-img-{{ loop.index }}" ref="{{ product.product_id }}" src="{{ url_for('static', filename='img/' + product.product_img) }}" alt="Image of {{ product.product_name }}" title="Click to see details for {{ product.product_name }}">
                                 </div>
                                 <div class="product-block product-card-stats" id="product-card-stats-div-{{ loop.index }}">
                                     
