@@ -32,3 +32,8 @@ for i in range(3):
     new_Card_receipt += " "
 new_Card_receipt += last_digit
 print("Your card receipt number is: " + new_Card_receipt)
+
+#   short method
+seq = 4 * 'X' + " "
+card_receipt_res = 3 * seq + last_digit
+print("Your card receipt number is: " + card_receipt_res)
