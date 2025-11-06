@@ -188,6 +188,7 @@
         define("INC_PATH", ROOT_PATH . "inc/");
         define("CLASSES_PATH", ROOT_PATH . "classes/");
         define("IMG_PATH", ROOT_PATH . "images/");
+        define("REPORT_PATH", ROOT_PATH . "docs/");
 
         define("APP_TITLE", "Medics Analysis App");
         define("PAGE_TITLE", "Medics &bull; " . $currentDataRef . "");
@@ -229,6 +230,7 @@
             "psa_value" => ["psa_range_min", "psa_range_max"],
             "creatinine_value" => ["creatinine_range_min", "creatinine_range_max"],
         ];
+
 
 
     nano inc/functions.inc.php
@@ -319,7 +321,19 @@
                             }
                         }
 
-                        $result_data .= "<div class='data-cell data-cell-".$key."'><span class='".$evidence_cell_value."'>" . e($value) . "</span>".$value_refs."</div>";
+                        $displayed_value = e($value);
+
+                        if($key === "analysis_date"){
+                            $filename = "".REPORT_PATH.str_replace('-', '_', $displayed_value).".pdf";
+                            if(file_exists($filename)){
+                                $displayed_value = "<a href='".$filename."' target='_blank'>".$displayed_value."</a>";
+                            }
+                            else{
+                                $displayed_value = "<span class='file-not-found-ref' title='File ".$displayed_value.".pdf is not present'>".$displayed_value."</span>";
+                            }
+                        }
+
+                        $result_data .= "<div class='data-cell data-cell-".$key."'><span class='".$evidence_cell_value."'>" . $displayed_value . "</span>".$value_refs."</div>";
                     }
                     $result_data .= "</div>";
                 }
@@ -405,7 +419,7 @@
           text-decoration: underline;
           text-shadow: #ffcc00 1px 0 10px;
         }
-
+        
         .page-container {
           text-align: center;
           border-bottom: 1px solid grey;
@@ -413,27 +427,27 @@
           padding-top: 20px;
           box-shadow: 0px 0px 2px 2px black;
           background-color: antiquewhite;
-
+        
           a {
             text-decoration: none;
             color: black;
           }
-
+        
           &.header-container {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-size: 2rem;
             font-weight: normal;
             text-decoration: none;
             text-shadow: #ffcc00 1px 0 10px;
-
+        
             h1 {
               font-weight: bold;
               text-decoration: underline;
             }
-
+        
             .menu-div {
               border: 0px solid red;
-
+        
               .menu-item-list {
                 margin: 0 auto;
                 display: flex;
@@ -441,7 +455,7 @@
                 align-items: center;
                 gap: 20px;
                 font-size: 1rem;
-
+        
                 li {
                   list-style-type: none;
                   cursor: pointer;
@@ -454,68 +468,71 @@
               }
             }
           }
-
+        
           &.content-container {
             margin-top: 50px;
             height: 700px;
             box-shadow: 0px 0px 0px 0px black;
-
+        
             .current-ref-title {
               font-size: 2rem;
               font-weight: bold;
               text-decoration: underline;
               margin-bottom: 20px;
             }
-
+        
             .result-div {
               border: 0px solid blue;
               height: 580px;
               overflow: auto;
-
+        
               .data-row {
                 border-bottom: 1px solid grey;
                 display: flex;
                 gap: 20px;
                 justify-content: center;
-
+        
                 .data-cell {
                   border: 0px solid red;
                   width: 150px;
                 }
-
+        
                 .data-cell-title {
                   font-weight: bold;
                   color: orangered;
                 }
-
+        
                 .data-cell-notes {
                   width: 200px;
                 }
-
+        
                 .data-cell-value-out-of-range{
                   color: red;
                   font-weight: bold;
                 }
-
+        
+                .file-not-found-ref{
+                  cursor: not-allowed;
+                }
+        
                 .value-refs{
                   color: black;
                   font-weight: normal;
                   font-size: 0.8rem;
                 }
-
+        
               }
-
+        
               .data-row:nth-child(2) {
                 background-color: turquoise;
               }
             }
-
+        
             h2 {
               font-size: 1.5rem;
             }
           }
         }
-
 
     nano index.php
 
