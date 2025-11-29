@@ -1,27 +1,27 @@
-    -   composer create-project laravel/laravel rubrica
+-   composer create-project laravel/laravel <PROJ_NAME>
 
-    -   in /Laravel/rubrica/.env
+-   in /Laravel/<PROJ_NAME>/.env
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=rubrica
+DB_DATABASE=<PROJ_NAME>
 DB_USERNAME=root
 DB_PASSWORD=
 
-    -   cd rubrica
+    -   cd <PROJ_NAME>
     -   php artisan migrate
 
-    -   php artisan make:controller RubricaController
+    -   php artisan make:controller <PROJ_NAME>Controller
 
-    -   in /Laravel/rubrica/routes/web.php:
+    -   in /Laravel/<PROJ_NAME>/routes/web.php:
 
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RubricaController;
+use App\Http\Controllers\<PROJ_NAME>Controller;
 
-Route::get('/', [RubricaController::class, 'index']);
+Route::get('/', [<PROJ_NAME>Controller::class, 'index']);
 
     -   mkdir public/css public/js public/include
 
@@ -35,20 +35,20 @@ Route::get('/', [RubricaController::class, 'index']);
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rubrica Laravel</title>
+        <title><PROJ_NAME> Laravel</title>
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     </head>
     <body>
         <?php include '../public/include/menunav.php'; ?>
-        <h1>Benvenuto nella Rubrica Laravel!</h1>
+        <h1>Benvenuto nella <PROJ_NAME> Laravel!</h1>
     </body>
 </html>
 
 <script src="{{ asset('js/custom.js') }}"></script>
 
 
-    -   in /Laravel/rubrica/app/Http/Controllers/RubricaController.php:
+    -   in /Laravel/<PROJ_NAME>/app/Http/Controllers/<PROJ_NAME>Controller.php:
 
 <?php
 
@@ -56,7 +56,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RubricaController extends Controller
+class <PROJ_NAME>Controller extends Controller
 {
     public function index()
     {
