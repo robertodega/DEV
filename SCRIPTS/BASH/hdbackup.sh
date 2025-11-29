@@ -128,17 +128,17 @@ if [ ! -d "$backup_dir_name" ]; then
     #   Backup of Home directory
     echo "--------------------------------------------------------------------------------------------------------"
 
-    start_thunderbird_time=$(date +%s)
+    #   start_thunderbird_time=$(date +%s)
 
-    echo -n "          >   Backup of '/home/roby/.thunderbird/' in progres ... "
-    if cp -r "/home/roby/.thunderbird/" ./Home; then
-        end_thunderbird_time=$(date +%s)
-        elapsed_seconds=$((end_thunderbird_time - start_thunderbird_time))
-        elapsed_minutes=$((elapsed_seconds / 60))
-        echo "          DONE! ( $elapsed_minutes minutes )"
-    else
-        echo "          >   Error during the backup of '/home/roby/.thunderbird/'." >&2
-    fi
+    #   echo -n "          >   Backup of '/home/roby/.thunderbird/' in progres ... "
+    #   if cp -r "/home/roby/.thunderbird/" ./Home; then
+    #       end_thunderbird_time=$(date +%s)
+    #       elapsed_seconds=$((end_thunderbird_time - start_thunderbird_time))
+    #       elapsed_minutes=$((elapsed_seconds / 60))
+    #       echo "          DONE! ( $elapsed_minutes minutes )"
+    #   else
+    #       echo "          >   Error during the backup of '/home/roby/.thunderbird/'." >&2
+    #   fi
 
     start_bash_aliases_time=$(date +%s)
 
