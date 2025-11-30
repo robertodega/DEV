@@ -1,7 +1,11 @@
 #!/bin/bash
 
 containers=(Multimedia Home)
-folders=(/home/roby/Documenti /home/roby/Immagini /home/roby/Musica)
+#   folders=(/home/roby/Documenti /home/roby/Immagini /home/roby/Musica)
+folders=(/home/roby/Documents /home/roby/Pictures /home/roby/Music)
+
+thunderbirdDebianPath="/home/roby/.thunderbird/"
+thunderbirdUbuntuPath="/home/roby/.var/app/org.mozilla.Thunderbird/.thunderbird"
 
 start_time=$(date +"%H:%M:%S")
 start_time_sec=$(date +%s)
@@ -128,17 +132,26 @@ if [ ! -d "$backup_dir_name" ]; then
     #   Backup of Home directory
     echo "--------------------------------------------------------------------------------------------------------"
 
-    #   start_thunderbird_time=$(date +%s)
+    start_thunderbird_time=$(date +%s)
 
-    #   echo -n "          >   Backup of '/home/roby/.thunderbird/' in progres ... "
-    #   if cp -r "/home/roby/.thunderbird/" ./Home; then
-    #       end_thunderbird_time=$(date +%s)
-    #       elapsed_seconds=$((end_thunderbird_time - start_thunderbird_time))
-    #       elapsed_minutes=$((elapsed_seconds / 60))
-    #       echo "          DONE! ( $elapsed_minutes minutes )"
-    #   else
-    #       echo "          >   Error during the backup of '/home/roby/.thunderbird/'." >&2
-    #   fi
+    echo -n "          >   Backup of '/home/roby/.thunderbird/' in progres ... "
+    
+    #   if cp -r $thunderbirdDebianPath ./Home; then        #   Debian
+    #   if cp -r $thunderbirdUbuntuPath ./Home; then        #   Ubuntu
+
+    $thunderbirdPath = $thunderbirdDebianPath
+    if [ -d "$thunderbirdUbuntuPath" ]; then
+        $thunderbirdPath = $thunderbirdUbuntuPath
+    fi
+    if cp -r $thunderbirdPath ./Home; then
+    
+        end_thunderbird_time=$(date +%s)
+        elapsed_seconds=$((end_thunderbird_time - start_thunderbird_time))
+        elapsed_minutes=$((elapsed_seconds / 60))
+        echo "          DONE! ( $elapsed_minutes minutes )"
+    else
+        echo "          >   Error during the backup of '/home/roby/.thunderbird/'." >&2
+    fi
 
     start_bash_aliases_time=$(date +%s)
 
