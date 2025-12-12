@@ -1,4 +1,0 @@
-RewriteEngine On
-    RewriteRule ^backup$ ./?p=backup [L]
-    RewriteRule ^backupDb$ ./?p=backup&c=1 [L]
-    RewriteRule ^doc$ ./inc/doc-viewer.inc.php [L]
