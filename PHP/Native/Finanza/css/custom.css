@@ -107,7 +107,7 @@ a:hover {
   text-align: right;
 }
 
-#overviewYearSelect {
+#yearSelector {
   cursor: pointer;
   font-size: medium;
   background-color: azure;
@@ -125,115 +125,87 @@ table {
 table th,
 table td {
   text-align: center;
+
+  &.tdlordo,
+  &.tdamount {
+    color: darkblue;
+  }
+  &.tdnetto {
+    color: green;
+  }
+  &.tdtaxes,
+  &.tdinterests {
+    color: red;
+  }
+  &.tdtot_income {
+    color: green;
+    font-weight: bold;
+  }
+  &.tdcapital {
+    color: green;
+  }
+  &.tdbckname {
+    width: 90%;
+  }
+  &.tdspese_fisse {
+    font-weight: normal;
+    color: red;
+  }
+  &.tdspese_extra_red {
+    font-weight: normal;
+    color: red;
+    background-color: wheat;
+  }
+  &.tdspese_totali {
+    font-weight: bold;
+    color: red;
+  }
+  &.tdsaldo {
+    font-weight: bold;
+    color: green;
+  }
+
+  .tdUpdate {
+    display: none;
+    text-align: center;
+  }
+
+  &.notAllowedField {
+    cursor: not-allowed;
+  }
+
+  &.editableField {
+    cursor: pointer;
+  }
+
+  .editableField:hover {
+    background-color: wheat;
+  }
+
+  .docViewerSpan {
+    cursor: pointer;
+    color: brown;
+    text-decoration: none;
+  }
+
+  .docViewerSpan:hover {
+    color: tomato;
+  }
 }
 
-table td.sourceTab {
-  background-color: yellow;
-  padding: 10px;
-  border: 1px solid black;
+table thead th {
+  &.thtitle {
+    font-size: 1rem;
+    background-color: aliceblue;
+  }
 }
 
-table td.totTab {
-  background-color: orangered;
-  color: white;
-}
-
-table td.greenTab {
-  background-color: darkgreen;
-  color: whitesmoke;
-}
-
-table td.netTab {
-  background-color: lightgreen;
-  color: black;
-}
-
-table td.statTab {
-  background-color: white;
-  color: black;
-}
-
-table td.totRedTab {
-  background-color: red;
-  color: white;
-}
-
-table td.firstTableField {
-  background-color: black;
-}
-
-table td.billFieldTab {
-  background-color: lightblue;
-  padding: 10px;
-  border: 1px solid black;
-}
-
-table td.calculatedFieldHead {
+table td.evidenceSelectedMonth{
   background-color: wheat;
-}
-
-table td.calculatedField {
-  color: darkorange;
-  font-weight: bold;
-}
-
-table td.totalField {
-  background-color: beige;
-  font-size: larger;
-}
-
-table td.totalAllField {
-  font-size: x-large;
-}
-
-table td.separatorRow {
-  background-color: bisque;
-  border: 0px solid black;
-}
-
-table td.totalTab {
-  background-color: orangered;
-  color: whitesmoke;
-  border: 0px solid black;
-}
-
-table td.saldiTab {
-  background-color: darkgrey;
-  color: black;
-  border: 0px solid black;
-}
-
-table td.evidenceTxtNormalOrange {
-  font-weight: normal;
-  color: orangered;
-}
-
-table td.evidenceTxtOrange {
-  font-weight: bold;
-  color: orangered;
-}
-
-table td.evidenceTxtRed {
-  font-weight: bold;
-  color: red;
-}
-
-table td.evidenceTxtGreen {
-  font-weight: bold;
-  color: green;
-}
-
-table td.evidenceTxtNormalGreen {
-  font-weight: normal;
-  color: green;
 }
 
 .editableField {
   cursor: pointer;
-}
-
-.calculatedField {
-  cursor: not-allowed;
 }
 
 .editableField:hover,
@@ -241,57 +213,7 @@ table td.evidenceTxtNormalGreen {
   background-color: beige;
 }
 
-.popupDiv {
-  width: 80%;
-  height: 80%;
-  padding: 1%;
-  margin-left: 10%;
-  margin-top: 5%;
-  background-color: black;
-  color: white;
-  z-index: 1;
-  opacity: 0.9;
-  position: absolute;
-}
-
-.updateFormHeader {
-  border-bottom: 1px solid white;
-}
-
-.updateHeaderDiv {
-  float: left;
-}
-
-#updateCloseBtn {
-  float: right;
-  cursor: pointer;
-}
-
-.updateFormRowDiv {
-  margin-top: 5%;
-  border: 1px solid white;
-  border-radius: 30px 30px 30px 30px;
-  padding: 1%;
-  cursor: pointer;
-}
-
-.updateFormRow {
-  margin-top: 1%;
-  margin-bottom: 1%;
-}
-
-.updateFormActDiv {
-  margin-top: 5%;
-  border: 1px solid white;
-  border-radius: 30px 30px 30px 30px;
-  padding: 1%;
-}
-
-.billContentDiv {
-  border: 1px solid grey;
-  height: 90%;
-  overflow: auto;
-}
+/* Datepicker styles */
 
 .datepicker {
   cursor: pointer;
@@ -306,41 +228,7 @@ table td.evidenceTxtNormalGreen {
   opacity: 0.4;
 }
 
-.evidenceTxt {
-  font-weight: bold;
-  font-size: larger;
-}
-
-.dbBackupDiv {
-  border-top: 0px solid grey;
-  border-bottom: 0px solid grey;
-  float: right;
-}
-
-#backupDbButton {
-  margin-left: 2%;
-}
-
-/* *.bckCsontentContainer{padding: 2%;border: 1px solid grey;margin-top: 3%;}/* */
-.bckTd {
-  text-align: left;
-}
-
-.bckTdSection {
-  float: left;
-  width: 30%;
-  text-align: center;
-}
-
-.bkpTdAction {
-  cursor: pointer;
-}
-
-.bkpTdAction:hover {
-  color: orange;
-}
-
-/*  Accordion section */
+/*  Accordion section *
 .accordion {
   background-color: #eee;
   color: #444;
