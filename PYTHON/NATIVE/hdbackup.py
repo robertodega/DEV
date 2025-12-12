@@ -7,7 +7,7 @@ rootFolder = '/home/roby/'
 containers = ['Multimedia', 'Home']
 foldersDebian = ['Documenti', 'Immagini', 'Musica']
 foldersUbuntu = ['Documents', 'Pictures', 'Music']
-folders = foldersUbuntu
+folders = foldersDebian
 
 separator="*" * 40
 dashSeparator="-" * 100
@@ -19,16 +19,15 @@ thanksLabel="\nThank you!\n"
 removingLabel="\t> Removing folder: "
 doneLabel="DONE"
 doesNotExistLabel="doesn't exist!"
+thunderbirdLabel="Backup of '/home/roby/.thunderbird/' in progress ... "
+thunderbirdError="Error during the backup of '/home/roby/.thunderbird/'."
 aliasesLabel="Backup of '/home/roby/.bash_aliases' in progress ... "
 aliasesError="Error during the backup of '/home/roby/.bash_aliases'."
 wwwLabel="Backup of '/opt/lampp/htdocs/WWW/' in progress ... "
 wwwError="Error during the backup of '/opt/lampp/htdocs/WWW/'."
 completedProcessLabel="Backup process is completed"
 thunderbirdDebianPath="/home/roby/.thunderbird/"
-thunderbirdUbuntuPath="/.var/app/org.mozilla.Thunderbird/.thunderbird"
-thunderbirdPath=thunderbirdUbuntuPath
-thunderbirdLabel="Backup of '{thunderbirdPath}' in progress ... "
-thunderbirdError="Error during the backup of '{thunderbirdPath}'."
+thunderbirdUbuntuPath="/home/roby/.var/app/org.mozilla.Thunderbird/.thunderbird"
 
 start_time = datetime.datetime.now().strftime("%H:%M:%S")
 start_time_sec = time.time()
@@ -107,8 +106,7 @@ if not os.path.exists(backup_dir_path):
 
     #   --------------------------------------------------------------------------------------
     #   Backup of Multimedia directory
-    #   os.system('mv Immagini Musica Multimedia/') #   Debian
-    os.system('mv Pictures Music Multimedia/')  #   Ubuntu
+    os.system('mv Immagini Musica Multimedia/')
     print(f"{dashSeparator}\n")
 
     #   --------------------------------------------------------------------------------------
@@ -120,8 +118,10 @@ if not os.path.exists(backup_dir_path):
         #   os.system('cp -r {thunderbirdDebianPath} ./Home')    #   Debian
         #   os.system('cp -r {thunderbirdUbuntuPath} ./Home')    #   Ubuntu
 
-        if os.path.exists(thunderbirdPath):
-            os.system('cp -r {thunderbirdPath} ./Home')
+        if os.path.exists(thunderbirdDebianPath):
+            os.system('cp -r '+thunderbirdDebianPath+' ./Home')
+        # elif os.path.exists(thunderbirdUbuntuPath):
+        #     os.system('cp -r {thunderbirdUbuntuPath} ./Home')
         
         end_thunderbird_time = time.time()
         elapsed_minutes = int((end_thunderbird_time - start_thunderbird_time) / 60)
