@@ -23,7 +23,7 @@ results = ""
 
 if conn:
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users")
+    cursor.execute("SELECT * FROM utils")
     users = cursor.fetchall()
     cursor.close()
     conn.close()
