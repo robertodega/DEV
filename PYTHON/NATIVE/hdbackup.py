@@ -66,17 +66,23 @@ if not os.path.exists(hdsupportDir):
     
 print(f"Start time: {start_time}\n")
 
-#   DELETE ALL PRESENT FOLDERS FOR Hamlet ( low capacity )
+dir_counter = 0
+max_folder_num = 3
 if hdsupport == "2":
-    if os.path.isdir(hdsupportDir):
-        for dir_name in os.listdir(hdsupportDir):
-            dir_path = os.path.join(hdsupportDir, dir_name)
-            if os.path.isdir(dir_path):
+    max_folder_num = 1
+
+if os.path.isdir(hdsupportDir):
+    current_folder_num = len(os.listdir(hdsupportDir))
+    for dir_name in os.listdir(hdsupportDir):
+        dir_path = os.path.join(hdsupportDir, dir_name)
+        if os.path.isdir(dir_path):
+            dir_counter += 1
+            if dir_counter <= (current_folder_num - max_folder_num + 1):
                 print(f"{removingLabel}{dir_name} ... ", end="")
                 os.system(f'rm -rf "{dir_path}"')
                 print(doneLabel)
-    else:
-        print(f"{hdsupportDir} {doesNotExistLabel}")
+else:
+    print(f"{hdsupportDir} {doesNotExistLabel}")
 
 os.chdir(hdsupportDir)
 print(f" > Navigated to {hdsupportDir}")
