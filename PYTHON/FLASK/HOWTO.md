@@ -24,14 +24,6 @@
             "remote": {"host": "", "dbname": "", "user": "", "pwd": ""},
         }
 
-        tablesList = {
-            "totali": "contocorrente",
-            "overview": "overview",
-            "bollette": "bills",
-            "stipendio": "stipendio",
-            "mutuo": "mutuo",
-        }
-
         website_title = "<PROJ_NAME>"
         rootpath = "./"
 
@@ -104,7 +96,7 @@
 
             if(conn):
                 cursor = conn.cursor()
-                cursor.execute("SELECT * FROM contocorrente")
+                cursor.execute("SELECT * FROM <TABLE_NAME>")
                 results = cursor.fetchall()
                 cursor.close()
                 conn.close()
@@ -143,14 +135,6 @@
                         <h2><a href='{{ rootpath }}'>Finanza</a> -
                             {{ parameters_values.page_ref }}
                         </h2>
-                    </div>
-                    <div class="headerTitleDiv" id="headerYearFormDiv">
-                        <select class="form-select form-select-sm locSelector" id="yearSelector" pageRef="{{ p }}"
-                            aria-label=".form-select-sm example">
-                            {% for y in allowed_years %}
-                            <option value="{{ y }}" {% if refYear==y %} selected {% endif %}>{{ y }}</option>
-                            {% endfor %}
-                        </select>
                     </div>
                 </div>
             </div>
