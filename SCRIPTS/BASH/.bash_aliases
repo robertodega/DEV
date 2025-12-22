@@ -50,12 +50,3 @@ alias postgresConnect='clear && sudo -i -u postgres'
 alias postgresStatus='clear && sudo systemctl status postgresql'
 alias postgresRestart='clear && sudo systemctl restart postgresql'
 
-#       FOLDERS
-#       -------
-alias projdir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS && lsla'
-alias flaskDir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/Python/Flask && lsla'
-alias githubDir='clear && cd /opt/lampp/htdocs/WWW/GITHUB/DEV && lsla'
-alias laraveldir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/PHP/Laravel && lsla'
-alias smartydir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/PHP/Smarty && lsla'
-alias hdbackup='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/Bash && ./hdbackup.sh'
-alias torbrowser='clear && cd /home/roby/Scaricati/tor-browser && ./start-tor-browser.desktop'
