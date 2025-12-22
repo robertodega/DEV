@@ -2,8 +2,8 @@
 
 #   Progect creation
 
-    mkdir reservations
-    cd reservations
+    mkdir <PROJ_NAME>
+    cd <PROJ_NAME>
     python3 -m venv venv
 
 #   Project activation
@@ -11,7 +11,7 @@
     source venv/bin/activate
     pip install django
     pip install djangorestframework
-    django-admin startproject reservations .
+    django-admin startproject <PROJ_NAME> .
     django-admin startapp manager
     python3 manage.py migrate
     python3 manage.py createsuperuser
@@ -24,7 +24,7 @@
 
 #   Project files update
 
-<u>in <strong>/reservations/urls.py</strong></u>
+<u>in <strong>/<PROJ_NAME>/urls.py</strong></u>
 
     from django.contrib import admin
     from django.urls import path, include
@@ -37,7 +37,7 @@
         path('search/', views.search, name='search'),
     ]
 
-<u>in <strong>/reservations/settings.py</strong></u>
+<u>in <strong>/<PROJ_NAME>/settings.py</strong></u>
 
     ...
 
@@ -71,7 +71,7 @@
     <!DOCTYPE HTML>
     <html>
         <head>
-            <title>Reservations App</title>
+            <title><PROJ_NAME> App</title>
             <link rel="stylesheet" href="{% static 'css/custom.css'%}" />
 
             <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -81,7 +81,7 @@
             
         </head>
         <body>
-            <h1>Reservations Home Page</h1>
+            <h1><PROJ_NAME> Home Page</h1>
         </body>
     </html>
 
@@ -138,13 +138,13 @@
             return f"Anagrafica for Appointment {self.appointment.id}"
 
 
-- cd/reservations
+- cd/<PROJ_NAME>
 - python3 manage.py makemigrations
 - python3 manage.py migrate
 
 #   functionality updates
 
-<u>in <strong>/reservations/urls.py</strong></u>
+<u>in <strong>/<PROJ_NAME>/urls.py</strong></u>
 
     from django.contrib import admin
     from django.urls import path, include
