@@ -1,4 +1,3 @@
-
 import os
 os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -20,8 +19,17 @@ def greetings():
 decorator(say_hello)
 decorator(greetings)
 
-#   @decorator
-#   def say_hello_with_decorator():
-#       print("Hello World!!!")
-#   
-#   say_hello_with_decorator()
+#   decorator with argument
+def repeat(n):
+    def decorator(func):
+        def wrapper(argument):
+            for i in range(n):
+                func(argument)
+        return wrapper
+    return decorator
+
+@repeat(8)
+def say_hello(argument):
+    print(f"Hello {argument} !")
+
+say_hello("Roby")
