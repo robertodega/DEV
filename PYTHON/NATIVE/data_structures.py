@@ -77,6 +77,7 @@ print(marks, type(marks))
 print(f"marks[\"roby\"]: {marks['roby']}")
 print(f"Keys of marks: {marks.keys()}")
 print(f"Values of marks: {marks.values()}")
+print(f"Items of marks: {marks.items()}")
 marks.clear()
 print(f"marks after clear: {marks}")
 
