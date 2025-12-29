@@ -18,23 +18,32 @@ db_const = {
     "remote": {"host": "", "dbname": "", "user": "", "pwd": ""},
 }
 
-conn = get_db_connection()
-results = ""
+if __name__ == "__main__":
+    conn = get_db_connection()
+    results = ""
+    table_name = input('Input the table name: ')
 
-if conn:
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM utils")
-    users = cursor.fetchall()
-    cursor.close()
-    conn.close()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM "+table_name+"")
+            users = cursor.fetchall()
+            cursor.close()
+            conn.close()
 
-    results = "Database connection successful\n\n"
+            results = "Database connection successful\n\n"
 
-    if users is not None:
-        for user in users:
-            results += f"ID: {user[0]}, Name: {user[1]}, Email: {user[2]}\n"
-else:
-    results = "Error in databasae reading operation"
+            if users is not None:
+                for user in users:
+                    results += f"ID: {user[0]}, Name: {user[1]}, Email: {user[2]}\n"
+            else:
+                results += "No data for table "+table_name+""
 
-print(results)
+        except Exception as e:
+            #   results = {e}
+            print(f"{e}")
+        
+    else:
+        results = "Error in databasae reading operation"
 
+    print(results)
