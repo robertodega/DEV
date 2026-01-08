@@ -1,12 +1,10 @@
 
 # project creation
 
-- mkdir <PROJ_NAME>/
-- cd <PROJ_NAME>/
-- mkdir DB
-- touch DB/db_init.sql
-- mkdir templates static static/js static/css static/img static/docs static/docs/stipendio static/docs/mutuo
-- touch app.py config.py const.py parameters.py templates/totali.html static/js/custom.js static/css/custom.css
+- mkdir <PROJ_NAME>
+- cd <PROJ_NAME>
+- mkdir DB templates static static/js static/css static/img static/docs
+- touch DB/db_init.sql app.py config.py const.py parameters.py static/js/custom.js static/css/custom.css
 
 # virtual env set
 
@@ -25,6 +23,7 @@
         }
 
         website_title = "<PROJ_NAME>"
+        table_name = "<TABLE_NAME>"
         rootpath = "./"
 
 
@@ -47,32 +46,10 @@
 
 - nano parameters.py
 
-        import datetime
         from flask import request
 
-
-        def get_year_ref():
-            return request.args.get("y", datetime.date.today().year)
-
-
-        def get_page_ref():
-            return request.args.get("p", "totali")
-
-
-        def get_month_ref():
-            return request.args.get("m", "")
-
-
-        def get_parameters():
-            return {
-                "year_ref": get_year_ref(),
-                "page_ref": get_page_ref(),
-                "month_ref": get_month_ref(),
-            }
-
-
-        current_year = datetime.date.today().year
-        allowed_years = list(range(current_year + 1, current_year - 5, -1))
+        def get_search_ref():
+            return request.args.get("s", "")
 
 # App creation
 
@@ -81,7 +58,7 @@
         from flask import Flask, render_template, request
         from config import get_db_connection
         import const
-        from parameters import get_parameters, current_year, allowed_years
+        from parameters import get_search_ref
 
         app = Flask(__name__)
 
@@ -92,11 +69,11 @@
             env = "remote" if host != "localhost" else host
             conn = get_db_connection(env)
 
-            parameters_values = get_parameters()
+            search_ref = get_search_ref()
 
             if(conn):
                 cursor = conn.cursor()
-                cursor.execute("SELECT * FROM <TABLE_NAME>")
+                cursor.execute("SELECT * FROM {}".format(const.table_name))
                 results = cursor.fetchall()
                 cursor.close()
                 conn.close()
@@ -104,7 +81,7 @@
                 results = {"Error in databasae reading operation"}
 
             return render_template("index.html",
-                                parameters_values=parameters_values,
+                                search_ref=search_ref,
                                 results=results,)
 
         if __name__ == "__main__":
@@ -132,9 +109,7 @@
             <div class="headerDiv">
                 <div class="headerBlockDiv">
                     <div class="headerTitleDiv" id="headerPathDiv">
-                        <h2><a href='{{ rootpath }}'>Finanza</a> -
-                            {{ parameters_values.page_ref }}
-                        </h2>
+                        <h2><a href='{{ rootpath }}'>{{ website_title }}</a></h2>
                     </div>
                 </div>
             </div>
