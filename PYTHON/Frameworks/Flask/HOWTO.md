@@ -62,27 +62,48 @@
 
         app = Flask(__name__)
 
+
         @app.route("/")
         def index():
 
-            host = request.host.split(':', 1)[0]
+            host = request.host.split(":", 1)[0]
             env = "remote" if host != "localhost" else host
             conn = get_db_connection(env)
 
             search_ref = get_search_ref()
+            results = ''
 
-            if(conn):
-                cursor = conn.cursor()
-                cursor.execute("SELECT * FROM {}".format(const.table_name))
-                results = cursor.fetchall()
-                cursor.close()
-                conn.close()
+            if conn:
+                if search_ref:
+                    try:
+                        if search_ref != "all":
+                            cursor = conn.cursor()
+                            cursor.execute(
+                                "SELECT * FROM {} WHERE subject LIKE %s OR username LIKE %s OR note LIKE %s".format(
+                                    const.table_name
+                                ),
+                                ("%" + search_ref + "%", "%" + search_ref + "%", "%" + search_ref + "%")
+                            )
+                            results = cursor.fetchall()
+                            cursor.close()
+                        else:
+                            cursor = conn.cursor()
+                            cursor.execute("SELECT * FROM {}".format(const.utils_table_name))
+                            results = cursor.fetchall()
+                            cursor.close()
+                    except Exception as e:
+                        results = {"Database query error: {}".format(e)}
+                    finally:
+                        conn.close()
             else:
-                results = {"Error in databasae reading operation"}
+                results = {"Error in database reading operation"}
 
-            return render_template("index.html",
-                                search_ref=search_ref,
-                                results=results,)
+            return render_template(
+                "index.html",
+                search_ref=search_ref,
+                results=results,
+            )
+
 
         if __name__ == "__main__":
             app.run(debug=True)
@@ -113,11 +134,46 @@
                     </div>
                 </div>
             </div>
-            <ul>
-                {% for result in results %}
-                <li>{{ result }}</li>
-                {% endfor %}
-            </ul>
+
+            <div class="utils-form-div" id="search-form-div">
+                <form action="{{ rootpath }}" method="get" id="search-form">
+                    <input type="text" name="s" id="search-input" class="utils-input" placeholder="Enter search term"
+                        value="{{ search_ref }}">
+                    <input type="submit" value="Search" id="search-submit" class="utils-button">
+                </form>
+            </div>
+
+            <div class="result-div" id="result-div">
+                {% if results %}
+                    <h3>Search Results:</h3>
+
+                    <table class='table table-striped table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Subject</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                            <tr>
+                                <td>{{ result[0] }}</td>
+                                <td>{{ result[1] }}</td>
+                                <td>{{ result[2] }}</td>
+                                <td>{{ result[3] }}</td>
+                                <td>{{ result[4] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% else %}
+                    <h3>No results found.</h3>
+                {% endif %}
+            </div>
         </body>
 
         </html>
