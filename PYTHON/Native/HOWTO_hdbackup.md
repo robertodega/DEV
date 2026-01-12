@@ -189,11 +189,15 @@
             )
             if continue_tag is not None:
                 thuderbird_start_time = time.time()
-                print(f"\n\n\t>>> Copying '.Thunderbird' to 'Home' container", end="")
-                shutil.copytree(
-                    os.path.join(thunderbird_path),
-                    os.path.join(backup_dir_path, "Home", ".Thunderbird"),
-                )
+                print(f"\n\t> Copying '.Thunderbird' to 'Home' container", end="")
+
+                os.system('cp -r '+thunderbird_path+' '+backup_dir_path+'/Home')
+
+                # shutil.copytree(
+                #     os.path.join(thunderbird_path),
+                #     os.path.join(backup_dir_path, "Home", ".Thunderbird"),
+                # )
+
                 print_eleapsed_time(thuderbird_start_time, time.time())
 
             print(f"\n\t> Total containers fill", end="")
