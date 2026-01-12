@@ -184,24 +184,18 @@
             else:
                 thunderbird_path = const.thunderbirdUbuntuPath
 
-            continue_tag = input(
-                f"\n\t> Please close Thunderbird app. Hit any button to continue..."
-            )
-            if continue_tag is not None:
-                thuderbird_start_time = time.time()
-                print(f"\n\t> Copying '.Thunderbird' to 'Home' container", end="")
-
-                os.system('cp -r '+thunderbird_path+' '+backup_dir_path+'/Home')
-
-                # shutil.copytree(
-                #     os.path.join(thunderbird_path),
-                #     os.path.join(backup_dir_path, "Home", ".Thunderbird"),
-                # )
-
-                print_eleapsed_time(thuderbird_start_time, time.time())
+            # continue_tag = input(
+            #     f"\n\t> Please close Thunderbird app. Hit any button to continue..."
+            # )
+            # if continue_tag is not None:
+            thuderbird_start_time = time.time()
+            print(f"\n\t> Copying '.Thunderbird' to 'Home' container", end="")
+            os.system("cp -r " + thunderbird_path + " " + backup_dir_path + "/Home")
+            print_eleapsed_time(thuderbird_start_time, time.time())
 
             print(f"\n\t> Total containers fill", end="")
             print_eleapsed_time(container_fill_start_time, time.time())
+
 
 - nano app.py
 
