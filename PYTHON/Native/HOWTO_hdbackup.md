@@ -22,11 +22,11 @@
             "\n\nChoose your disk ( 0 to exit ):\n\n\t1\tToshiba\n\t2\tHamlet\n\n\t> "
         )
 
+
 - nano functions.py
 
         import os
         import shutil
-        import sys
         import datetime, time
         import const
 
@@ -47,7 +47,7 @@
                     f"\n\n{const.separator}\n >>> End time: {end_time} ( {elapsed_minutes} minutes )\n{const.separator}\n"
                 )
             else:
-                print(f" ( {elapsed_minutes} minutes ) ")
+                print(f" Done ( {elapsed_minutes} minutes ) ", end="")
 
 
         def print_header():
@@ -96,6 +96,7 @@
                         shutil.rmtree(dir_to_remove)
                         print("Done", end="")
 
+                print(f"\n\t> Total old backup folders removal", end="")
                 print_eleapsed_time(remove_start_time, time.time())
 
             return support_disk_path
@@ -118,6 +119,8 @@
 
 
         def folder_copy(backup_dir_path):
+            folder_copy_start_time = time.time()
+
             if os.path.exists(const.rootFolder + const.foldersDebian[0]):
                 ref_folders = const.foldersDebian
             else:
@@ -125,54 +128,55 @@
 
             for folder in ref_folders:  #   Documenti, Immagini, Musica
                 folder_copy_time = time.time()
-                print(f"\n\n\t>>> Copying {folder} ...", end="")
+                print(f"\n\t> Copying {folder} ...", end="")
                 shutil.copytree(
                     os.path.join(const.rootFolder, folder),
                     os.path.join(backup_dir_path, folder),
                 )
-                folder_copy_end_time = time.time()
-                elapsed_minutes = int((folder_copy_end_time - folder_copy_time) / 60)
-                print(f" Done ( {elapsed_minutes} minutes )")
+                print_eleapsed_time(folder_copy_time, time.time())
 
             if os.path.exists(const.wwwPath):  #   WWW
                 www_copy_time = time.time()
-                print(f"\n\n\t>>> Copying WWW ...", end="")
+                print(f"\n\t> Copying WWW ...", end="")
                 shutil.copytree(
                     os.path.join(const.wwwPath),
                     os.path.join(backup_dir_path, "WWW"),
                 )
-                www_copy_end_time = time.time()
-                elapsed_minutes = int((www_copy_end_time - www_copy_time) / 60)
-                print(f" Done ( {elapsed_minutes} minutes )")
+                print_eleapsed_time(www_copy_time, time.time())
+
+            print(f"\n\t> Total folder copy", end="")
+            print_eleapsed_time(folder_copy_start_time, time.time())
 
             return ref_folders
 
 
         def container_fill(ref_folders, backup_dir_path):
+            container_fill_start_time = time.time()
+
             for container in const.containers:
                 os.makedirs(container)
-                print(f"\n\t> Created new container '{container}'")
+                print(f"\n\t> Created new container '{container}'", end="")
 
-            print(f"\n\n\t>>> Moving '{ref_folders[1]}' to 'Multimedia' container", end="")
+            print(f"\n\t> Moving '{ref_folders[1]}' to 'Multimedia' container", end="")
             shutil.move(  #   Multimedia
                 os.path.join(backup_dir_path, ref_folders[1]),
                 os.path.join(backup_dir_path, "Multimedia", ref_folders[1]),
             )
-            print(f" Done")
+            print(f" Done", end="")
 
-            print(f"\n\n\t>>> Moving '{ref_folders[2]}' to 'Multimedia' container", end="")
+            print(f"\n\t> Moving '{ref_folders[2]}' to 'Multimedia' container", end="")
             shutil.move(  #   Multimedia
                 os.path.join(backup_dir_path, ref_folders[2]),
                 os.path.join(backup_dir_path, "Multimedia", ref_folders[2]),
             )
-            print(f" Done")
+            print(f" Done", end="")
 
-            print(f"\n\n\t>>> Copying '.bash_aliases' to 'Home' container", end="")
+            print(f"\n\t> Copying '.bash_aliases' to 'Home' container", end="")
             shutil.copy(  #   bash_aliases
                 os.path.join(const.rootFolder, ".bash_aliases"),
                 os.path.join(backup_dir_path, "Home", ".bash_aliases"),
             )
-            print(f" Done")
+            print(f" Done", end="")
 
             #   Thunderbird
             if os.path.exists(const.thunderbirdDebianPath):
@@ -181,42 +185,39 @@
                 thunderbird_path = const.thunderbirdUbuntuPath
 
             continue_tag = input(
-                f"\n\t> Please close Thunderbird app. Hitting ENTER to continue..."
+                f"\n\t> Please close Thunderbird app. Hit any button to continue..."
             )
             if continue_tag is not None:
+                thuderbird_start_time = time.time()
                 print(f"\n\n\t>>> Copying '.Thunderbird' to 'Home' container", end="")
-                shutil.copy(
-                    os.path.join(const.rootFolder, thunderbird_path),
-                    os.path.join(backup_dir_path, "Home", thunderbird_path),
+                shutil.copytree(
+                    os.path.join(thunderbird_path),
+                    os.path.join(backup_dir_path, "Home", ".Thunderbird"),
                 )
-                print(f" Done")
+                print_eleapsed_time(thuderbird_start_time, time.time())
+
+            print(f"\n\t> Total containers fill", end="")
+            print_eleapsed_time(container_fill_start_time, time.time())
 
 - nano app.py
 
         import functions
-        import datetime, time
+        import time
 
         if __name__ == "__main__":
 
             start_time = time.time()
 
             functions.print_header()
-
             support_disk_name = functions.support_choice()
             support_disk_path = functions.remove_old_backups(support_disk_name)
-
-            backup_creation_start_time = time.time()
             backup_dir_path = functions.folder_creation(support_disk_path)
-
-            folder_copy_time = time.time()
             ref_folders = functions.folder_copy(backup_dir_path)
-            functions.print_eleapsed_time(folder_copy_time, time.time())
-
-            container_fill_time = time.time()
             functions.container_fill(ref_folders, backup_dir_path)
-            functions.print_eleapsed_time(container_fill_time, time.time())
-
             functions.print_eleapsed_time(start_time, time.time(), True)
             functions.print_goodbye()
 
+
+
 - python3 app.py
+
