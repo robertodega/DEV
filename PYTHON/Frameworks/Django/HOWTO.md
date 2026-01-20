@@ -1,170 +1,322 @@
+- from https://docs.djangoproject.com/en/6.0/intro/tutorial01/
 
+# Project dir creation
+- mkdir mysite
+- cd mysite
+- mkdir djangotutorial
+- django-admin startproject mysite djangotutorial
+- cd djangotutorial
+- python3 manage.py runserver
 
-#   Progect creation
+# Project App creation
+- python3 manage.py startapp polls
 
-    mkdir <PROJ_NAME>
-    cd <PROJ_NAME>
-    python3 -m venv venv
+# Project App customization
+- nano polls/views.py
 
-#   Project activation
+        from django.http import HttpResponse
 
-    source venv/bin/activate
-    pip install django
-    pip install djangorestframework
-    django-admin startproject <PROJ_NAME> .
-    django-admin startapp manager
-    python3 manage.py migrate
-    python3 manage.py createsuperuser
-    python3 manage.py runserver
+        def index(request):
+            return HttpResponse("Hello, world. You're at the polls index.")
 
-#   Project population
+- nano polls/urls.py
 
-    mkdir static static/css static/js templates
-    touch static/css/custom.css static/js/custom.js templates/main.html manager/forms.py
+        from django.urls import path
 
-#   Project files update
+        from . import views
 
-<u>in <strong>/<PROJ_NAME>/urls.py</strong></u>
+        urlpatterns = [
+            path("", views.index, name="index"),
+        ]
 
-    from django.contrib import admin
-    from django.urls import path, include
-    from django.views.generic.base import TemplateView
+# Project App inclusion
+- nano mysite/urls.py
 
-    urlpatterns = [
-        path('admin/', admin.site.urls),
-        path('accounts/', include('django.contrib.auth.urls')),
-        path("", TemplateView.as_view(template_name="main.html"), name="main"),
-        path('search/', views.search, name='search'),
-    ]
+        from django.contrib import admin
+        from django.urls import include, path
 
-<u>in <strong>/<PROJ_NAME>/settings.py</strong></u>
+        urlpatterns = [
+            path("polls/", include("polls.urls")),
+            path("admin/", admin.site.urls),
+        ]
 
-    ...
-
-    INSTALLED_APPS = [
-        ...
-        'rest_framework',
-        'manager',
-    ]
-
-    ...
-
-    TEMPLATES = [
-        {   
-            ...
-            'DIRS': [BASE_DIR / "templates"],
-            ...
-
-        ...
-
-    STATICFILES_DIRS = [
-        BASE_DIR / "static",
-    ]
-
-
-    LOGIN_REDIRECT_URL = "main"
-    LOGOUT_REDIRECT_URL = "main"
-
-<br /><br /><u>edit /templates/main.html </u>
-
-    {% load static %}
-    <!DOCTYPE HTML>
-    <html>
-        <head>
-            <title><PROJ_NAME> App</title>
-            <link rel="stylesheet" href="{% static 'css/custom.css'%}" />
-
-            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-            
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-            
-        </head>
-        <body>
-            <h1><PROJ_NAME> Home Page</h1>
-        </body>
-    </html>
-
-    <script src="{% static 'js/custom.js'%}"></script>
-
-- <u>edit static/css/custom.css</u>
-- <u>edit static/js/custom.js</u>
-
-
-<br /><br /><u>edit /manager/views.py </u>
-
-    ffrom django.shortcuts import render
-    from django.http import JsonResponse
-    from .models import Appointment, Anagrafica
-    from django.views.decorators.csrf import csrf_exempt
-
-    def search_appointment(request):
-    def search_appointment_with_id(request, id):
-    @csrf_exempt    
-    def add_appointment(request):
-    def search_anagrafica(request):
-    def search_anagrafica_with_id(request, id):
-    def add_anagrafica(request):
-
-<br /><br /><u>edit /manager/models.py </u>
-
-    from django.db import models
-
-    class Appointment(models.Model):
-        id = models.AutoField(primary_key=True)
-        email = models.EmailField(null=False)
-        first_name = models.CharField(max_length=30, null=True, blank=True)
-        last_name = models.CharField(max_length=30, null=True, blank=True)
-        reservation_date = models.DateTimeField()
-        reservation_hour = models.TimeField(null=True, blank=True)
-        created_at = models.DateTimeField(auto_now_add=True)
-        updated_at = models.DateTimeField(auto_now=True)
-        
-        def __str__(self):
-            return f"Appointment {self.id} for {self.email}"
-        
-    class Anagrafica(models.Model):
-        id = models.AutoField(primary_key=True)
-        #   appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE)
-        email = models.EmailField(unique=True)
-        first_name = models.CharField(max_length=30, null=True, blank=True)
-        last_name = models.CharField(max_length=30, null=True, blank=True)
-        is_active = models.BooleanField(default=True)
-        address = models.CharField(max_length=255, null=True, blank=True)
-        phone_number = models.CharField(max_length=15, null=True, blank=True)
-        date_of_birth = models.DateField(null=True, blank=True)
-        
-        def __str__(self):
-            return f"Anagrafica for Appointment {self.appointment.id}"
-
-
-- cd/<PROJ_NAME>
-- python3 manage.py makemigrations
+# DB setup
 - python3 manage.py migrate
 
-#   functionality updates
+# Models creation ( database layout )
+- nano polls/models.py
 
-<u>in <strong>/<PROJ_NAME>/urls.py</strong></u>
+        from django.db import models
 
-    from django.contrib import admin
-    from django.urls import path, include
-    from django.views.generic.base import TemplateView
-    from manager import views
+        class Question(models.Model):
+            question_text = models.CharField(max_length=200)
+            pub_date = models.DateTimeField("date published")
 
-    urlpatterns = [
-        path('admin/', admin.site.urls),
-        path('accounts/', include('django.contrib.auth.urls')),
-        path("", TemplateView.as_view(template_name="main.html"), name="main"),
-        path('search_appointment/', views.search_appointment, name='search_appointment'),
-        path('search_appointment/<int:id>/', views.search_appointment_with_id, name='search_appointment_with_id'),
-        path('add_appointment/', views.add_appointment, name='add_appointment'),
-        path('search_anagrafica/', views.search_anagrafica, name='search_anagrafica'),
-        path('search_anagrafica/<int:id>/', views.search_anagrafica_with_id, name='search_anagrafica_with_id'),
-        path('add_anagrafica/', views.add_anagrafica, name='add_anagrafica'),
-    ]
 
-#   Project RUN
+        class Choice(models.Model):
+            question = models.ForeignKey(Question, on_delete=models.CASCADE)
+            choice_text = models.CharField(max_length=200)
+            votes = models.IntegerField(default=0)
 
-- source venv/bin/activate
-- python3 manage.py runserver
+- nano polls/app.py
+    -   copy config class name
+
+- nano mysite/settings.py
+    -   in INSTALLED_APPS list paste APP (polls) config class name
+
+            INSTALLED_APPS = [
+                "polls.apps.PollsConfig",       // <= NEW CONFIG ADDED
+                "django.contrib.admin",
+                "django.contrib.auth",
+                "django.contrib.contenttypes",
+                "django.contrib.sessions",
+                "django.contrib.messages",
+                "django.contrib.staticfiles",
+            ] 
+
+# store Model changes
+- python3 manage.py makemigrations polls
+
+# Model Table changes in DB
+- python3 manage.py migrate
+
+# Interactive Python Shell
+- python3 manage.py shell
+
+# Admin User
+- python3 manage.py createsuperuser
+
+# App managed by Admin
+- nano polls/admin.py
+
+        from django.contrib import admin
+
+        from .models import Question
+
+        admin.site.register(Question)
+
+# Views management
+- nano polls/views.py
+
+        def detail(request, question_id):
+            return HttpResponse("You're looking at question %s." % question_id)
+
+
+        def results(request, question_id):
+            response = "You're looking at the results of question %s."
+            return HttpResponse(response % question_id)
+
+
+        def vote(request, question_id):
+            return HttpResponse("You're voting on question %s." % question_id)
+
+# Views activation in urls
+- nano polls/urls.py
+
+        from django.urls import path
+
+        from . import views
+
+        urlpatterns = [
+            path("", views.index, name="index"),
+            
+            path("<int:question_id>/", views.detail, name="detail"),
+            path("<int:question_id>/results/", views.results, name="results"),
+            path("<int:question_id>/vote/", views.vote, name="vote"),
+        ]
+
+# Update views with database API
+- nano polls/views.py
+
+        ...
+        from .models import Question
+        ...
+        def index(request):
+    
+        #       return HttpResponse("Hello, world. You're at the polls index.")
+
+        latest_question_list = Question.objects.order_by("-pub_date")[:5]
+        output = "<br />".join([q.question_text for q in latest_question_list])
+        return HttpResponse(output)
+
+# Design from Python separation ( templates usage )
+- mkdir polls/templates polls/templates/polls
+- nano polls/templates/polls/index.html
+
+        <h1>Polls page</h1>
+        {% if latest_question_list %}
+            <ul>
+            {% for question in latest_question_list %}
+                <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+
+# View update for template usage
+- nano polls/views.py
+
+        from django.shortcuts import render
+        from django.http import HttpResponse
+        from .models import Question
+        from django.template import loader
+
+        def index(request):
+            latest_question_list = Question.objects.order_by("-pub_date")[:5]
+            context = {"latest_question_list": latest_question_list}
+            template = loader.get_template("polls/index.html")
+            return HttpResponse(template.render(context, request))
+        
+        ...
+
+# Djang0 Render shortcut
+- nano polls/views.py
+
+        from django.shortcuts import render
+        from django.http import HttpResponse
+        from .models import Question
+        #   from django.template import loader
+
+        def index(request):
+            latest_question_list = Question.objects.order_by("-pub_date")[:5]
+            context = {"latest_question_list": latest_question_list}
+            #   template = loader.get_template("polls/index.html")
+            #   return HttpResponse(template.render(context, request))
+            return render(request, "polls/index.html", context)
+            
+        ...
+
+# Error page management
+- nano polls/templates/polls/detail.html
+
+        {{ question }}
+
+- nano polls/views.py
+
+        from django.http import Http404
+        
+        ...
+
+        def detail(request, question_id):
+            #   return HttpResponse("You're looking at question %s." % question_id)
+            try:
+                question = Question.objects.get(pk=question_id)
+            except Question.DoesNotExist:
+                raise Http404("Question does not exist")
+            return render(request, "polls/detail.html", {"question": question})
+
+- Error Raise shortcut
+    -   nano polls/views.py
+
+            from django.shortcuts import get_object_or_404, render
+            ...
+            def detail(request, question_id):
+                #   try:
+                #       question = Question.objects.get(pk=question_id)
+                #   except Question.DoesNotExist:
+                #       raise Http404("Question does not exist")
+                #   return render(request, "polls/detail.html", {"question": question})
+                question = get_object_or_404(Question, pk=question_id)
+                return render(request, "polls/detail.html", {"question": question})
+
+    - nano polls/templates/polls/detail.html
+
+            <h1>{{ question.question_text }}</h1>
+            <ul>
+            {% for choice in question.choice_set.all %}
+                <li>{{ choice.choice_text }}</li>
+            {% endfor %}
+            </ul>
+
+# name param use from APP urls.py
+- nano polls/templates/polls/index.html
+
+        <h1>Polls page</h1>
+        {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+            <!--<li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>-->
+            <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No polls are available.</p>
+        {% endif %}
+
+- nano polls/templates/polls/detail.html 
+
+        <hr /><a href="{% url 'index' %}">Home</a><hr />
+        <h1>{{ question.question_text }}</h1>
+        <ul>
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }}</li>
+        {% endfor %}
+        </ul>
+
+- nano polls/urls.py
+
+        possibility to change entire path for all templates which use it in one operation:
+
+        ...
+        #   path("<int:question_id>/", views.detail, name="detail"),
+        path("specifics/<int:question_id>/", views.detail, name="detail"),
+        ...
+    
+# Namespaces
+- APP organization in namespaces for projects with many apps
+    - nano polls/urls.py
+
+            from django.urls import path
+
+            from . import views
+
+            app_name = "polls"
+            urlpatterns = [
+                path("", views.index, name="index"),
+                path("<int:question_id>/", views.detail, name="detail"),
+                path("<int:question_id>/results/", views.results, name="results"),
+                path("<int:question_id>/vote/", views.vote, name="vote"),
+            ]
+
+    - nano polls/templates/polls/index.html
+
+            ...
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            ...
+
+    - nano polls/templates/polls/detail.html
+
+            <hr /><a href="{% url 'polls:index' %}">Home</a><hr />
+            ...
+
+# Form usage
+- nano polls/templates/polls/detail.html
+
+        <hr /><a href="{% url 'polls:index' %}">Home</a>
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>
+                    <h1>{{ question.question_text }}</h1>
+                </legend>
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                {% endfor %}
+            </fieldset>
+            <input type="submit" value="Vote">
+        </form>
+
+    # Static style
+    - mkdir polls/static/polls
+    - nano polls/static/polls/style.css
+        -   ...
+    - nano polls/templates/polls/index.html
+
+            {% load static %}
+
+            <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+            ...
 
