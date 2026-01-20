@@ -37,7 +37,7 @@
 
 - Verify Installation
   
-      sudo docker run hello-world
+      docker run hello-world
 
 - sudo systemctl start docker
 - sudo systemctl restart docker
