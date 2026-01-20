@@ -1,98 +1,82 @@
+- Docker management commands
 
-#   Docker service run
+        sudo systemctl status docker
+        sudo systemctl start docker
+        sudo systemctl restart docker
 
-    sudo systemctl start docker
+- Project Creation
 
-#   Docker service restart
+        mkdir <PATH_TO_APP>/<PROJECT_NAME>
+        cd <PATH_TO_APP>/<PROJECT_NAME>
+        python3 -m venv venv
 
-    sudo systemctl restart docker
+- Project activation
 
-#   Docker status check
+        source venv/bin/activate
+        touch app.py requirements.txt Dockerfile docker-compose.yml
 
-    sudo systemctl status docker
+    - nano app.py
+    
+                from flask import Flask
 
-#   Project creation ( Python )
+                app = Flask(__name__)
 
-    mkdir <PATH_TO_APP>/<IMAGE_NAME>
-    cd <PATH_TO_APP>/<IMAGE_NAME>
-    python3 -m venv venv
+                @app.route("/")
+                def home():
+                return "Docker container is running!"
 
-#   Project activation
+                if __name__ == "__main__":
+                app.run(host="0.0.0.0", port=8080)
 
-    source venv/bin/activate
-    touch app.py Dockerfile docker-compose.yml requirements.txt
+    - nano requirements.txt
 
-    nano app.py
+                flask==2.3.2
 
-        from flask import Flask
+    - nano docker-compose.yml                                   #   per utilizzo di database
 
-        app = Flask(__name__)
+                version: "3.9"
+                services:
+                app:
+                build:
+                context: .
+                ports:
+                - "8080:8080"
+                volumes:
+                - .:/app
 
-        @app.route("/")
-        def home():
-            return "Docker container is running!"
 
-        if __name__ == "__main__":
-            app.run(host="0.0.0.0", port=8080)
+- Dockerfile constrution
 
-    nano Dockerfile
+        FROM python:3.9-slim                                    #   Base Image
+        WORKDIR /app                                            #   work directory set in container
+        COPY requirements.txt .                                 #   requirements file copy
+        COPY . /app                                             #   App code copy
+        RUN pip install --no-cache-dir -r requirements.txt      #   dependences installation
+        EXPOSE 8080                                             #   port expose
+        CMD ["python", "app.py"]                                #   container start command
 
-        # Usa un'immagine base di Python
-        FROM python:3.9-slim
+- Docker Image creation
 
-        # Imposta la directory di lavoro all'interno del container
-        WORKDIR /app
+        docker build -t <PROJECT_NAME> .
 
-        # Copia i file del progetto nella directory di lavoro
-        COPY . /app
+- Docker Image save
 
-        # Installa le dipendenze
-        RUN pip install --no-cache-dir -r requirements.txt
+        docker tag <PROJECT_NAME> <USERNAME>/<PROJECT_NAME>
 
-        # Espone la porta 8080
-        EXPOSE 8080
+- Docker Image upload
 
-        # Comando di avvio dell'app
-        CMD ["python", "app.py"]
+        docker push <USERNAME>/<PROJECT_NAME>
 
-    nano requirements.txt
+- Container Run
 
-        flask==2.3.2
+        docker run -d -p 8080:8080 --name <CONTAINER_NAME> <PROJECT_NAME>
+        docker-compose up                                       #   if using Docker Compose
 
-    nano docker-compose.yml     #   per utilizzo di database
+- Check
 
-        version: "3.9"
-        services:
-        app:
-            build:
-            context: .
-            ports:
-            - "8080:8080"
-            volumes:
-            - .:/app
-
-#   Docker image construction
-
-    docker build -t <IMAGE_NAME_LOWERCASE> .
-
-#   Container run
-
-    docker run -p 8080:8080 <IMAGE_NAME>
-    docker-compose up                       #   if using Docker Compose
-
-#   Container access
-
-    docker exec -it <IMAGE_NAME> bash
-
-#   Image save
-
-    docker tag nome-immagine username/nome-immagine
-
-#   Image upload
-
-    docker push username/nome-immagine
-
-#   Application Access
-
-    http://localhost:8080
+        docker exec -it <PROJECT_NAME> bash                     #   container access
+        docker ps                                               #   Container in execution
+        docker logs <CONTAINER_NAME>                            #   project output (debugging)
+        docker stop <CONTAINER_NAME>                            #   Stops the container.
+        http://localhost:8080                                   #   Application access
 
