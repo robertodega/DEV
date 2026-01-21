@@ -32,7 +32,7 @@
 
                 flask==2.3.2
 
-    - nano docker-compose.yml                                   #   per utilizzo di database
+    - nano docker-compose.yml                                                           #   per utilizzo di database
 
                 version: "3.9"
                 services:
@@ -47,13 +47,13 @@
 
 - Dockerfile constrution
 
-        FROM python:3.9-slim                                    #   Base Image
-        WORKDIR /app                                            #   work directory set in container
-        COPY requirements.txt .                                 #   requirements file copy
-        COPY . /app                                             #   App code copy
-        RUN pip install --no-cache-dir -r requirements.txt      #   dependences installation
-        EXPOSE 8080                                             #   port expose
-        CMD ["python", "app.py"]                                #   container start command
+        FROM python:3.9-slim                                                            #   Base Image
+        WORKDIR /app                                                                    #   work directory set in container
+        COPY requirements.txt .                                                         #   requirements file copy
+        COPY . /app                                                                     #   App code copy
+        RUN pip install --no-cache-dir -r requirements.txt mysql-connector-python       #   dependences installation
+        EXPOSE 8080                                                                     #   port expose
+        CMD ["python", "app.py"]                                                        #   container start command
 
 - Docker Image creation
 
@@ -69,7 +69,7 @@
 
 - Container Run
 
-        docker run -d -p 8080:8080 --name <CONTAINER_NAME> <PROJECT_NAME>
+        docker run -d -p 8080:8080 <PROJECT_NAME>
         docker-compose up                                       #   if using Docker Compose
 
 - Check
@@ -80,3 +80,7 @@
         docker stop <CONTAINER_NAME>                            #   Stops the container.
         http://localhost:8080                                   #   Application access
 
+- Docker null containers/images removal
+        docker container prune    # <none> container
+        docker image prune        # <none> images
+        docker image prune -a     # unused images
