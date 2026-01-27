@@ -1,7 +1,7 @@
 - mkdir Login
 - cd Login
 - mkdir config classes inc templates css js DB
-- touch index.php logout.php .htaccess functions.php config/config.php classes/dbman.php classes/manager.php classes/conn.php css/custom.css js/custom.js templates/loginform.php templates/dashboard.php DB/login.sql
+- touch index.php logout.php check_session.php .htaccess functions.php config/config.php classes/dbman.php classes/manager.php classes/conn.php css/custom.css js/custom.js templates/loginform.php templates/dashboard.php DB/login.sql
 
 - nano .htaccess
 
@@ -287,6 +287,7 @@
         
 - nano templates/dashbard.php
 
+        <?php require_once __DIR__ . '/../check_session.php'; ?>
         <div class="dashboard-container">
             <div class="dashboard-header">
                 <div class="dashboard-title">
@@ -307,3 +308,22 @@
         session_unset();
         session_destroy();
         header('Location: ./');
+
+- nano check_session.php
+
+        <?php
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            function check_auth()
+            {
+                if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+                    session_unset();
+                    session_destroy();
+                    header("Location: ".ROOT_PATH."");
+                    exit;
+                }
+            }
+
+            check_auth();
