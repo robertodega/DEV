@@ -88,12 +88,6 @@
                 return htmlspecialchars($value, ENT_QUOTES, "UTF-8");
             }
 
-- nano haccess
-
-        RewriteEngine On
-            RewriteRule ^login$ index.php [L]
-            RewriteRule ^dashboard$ dashboard.php [L]
-
 - nano config/config.php
 
         <?php
