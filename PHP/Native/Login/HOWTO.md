@@ -1,7 +1,7 @@
 - mkdir Login
 - cd Login
 - mkdir config classes inc templates css js DB
-- touch index.php logout.php check_session.php .htaccess functions.php config/config.php classes/dbman.php classes/manager.php classes/conn.php css/custom.css js/custom.js templates/loginform.php templates/dashboard.php DB/login.sql
+- touch index.php logout.php check_session.php .htaccess functions.php config/config.php classes/dbman.php classes/manager.php classes/conn.php css/custom.css js/custom.js templates/loginform.php templates/signinform.php templates/dashboard.php DB/login.sql
 
 - nano .htaccess
 
@@ -236,7 +236,7 @@
         require_once __DIR__ . "/classes/manager.php";
         require_once __DIR__ . "/classes/conn.php";
 
-        $auth_user_msg = $manager->auth_user($login_json);
+        $auth_user_msg = $manager->auth_user();
         ?>
         <!DOCTYPE HTML>
         <html>
@@ -259,7 +259,9 @@
                 if (!$auth_user_msg) {
                     include __DIR__ . "/templates/loginform.php";
                 } else {
-                    include __DIR__ . "/templates/dashboard.php";
+                    $signin = $_GET['signin'] ?? false;
+                    if (!$signin) {include __DIR__ . "/templates/signinform.php";}
+                    else{include __DIR__ . "/templates/dashboard.php";}
                 }
             ?>
 
@@ -271,7 +273,7 @@
 
 - nano templates/loginform.php
 
-        <form method="post" action="login">
+        <form method="post" action="login" id="login-form" name="login-form">
             <div class="form-group">
                 <label for="username"><?= USERNAME_LABEL ?></label>
                 <input type="text" id="username" name="username" required>
@@ -280,9 +282,9 @@
                 <label for="password"><?= PASSWORD_LABEL ?></label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit"><?= LOGIN_BUTTON_TEXT ?></button>
-            <button type="reset"><?= RESET_BUTTON_TEXT ?></button>
-            <button type="button"><?= SIGNIN_BUTTON_TEXT ?></button>
+            <button type="submit" class="login-btn" id="login-btn"><?= LOGIN_BUTTON_TEXT ?></button>
+            <button type="reset" class="login-btn" id="reset-btn"><?= RESET_BUTTON_TEXT ?></button>
+            <button type="button" class="login-btn" id="signin-btn"><?= SIGNIN_INSTR_LABEL ?></button>
         </form>
         
 - nano templates/dashbard.php
@@ -301,6 +303,39 @@
                 You Logged In!
             </div>
         </div>
+
+- nano templates/signinform.php
+
+        <?php
+        $signin_act = $_POST['signin-field'] ?? false;
+        if ($signin_act) {
+            // $set_user_msg = $manager->set_user($signin_json);
+            ?><h2>Memorizzando ... </h2><?php
+        } else {
+        ?>
+            <form method="post" id="login-form" name="login-form" action="signin">
+                <div class="form-group">
+                    <label for="username"><?= USERNAME_LABEL ?></label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email"><?= EMAIL_LABEL ?></label>
+                    <input type="text" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password"><?= PASSWORD_LABEL ?></label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <input type="hidden" id="signin-field" name="signin-field" value="1">
+
+                <button type="submit" class="login-btn" id="signin-act-btn"><?= SIGNIN_BUTTON_TEXT ?></button>
+                <button type="reset" class="login-btn" id="reset-btn"><?= RESET_BUTTON_TEXT ?></button>
+                <button type="button" class="login-btn" id="undo-btn"><?= UNDO_BUTTON_TEXT ?></button>
+            </form>
+        <?php
+        }
+        ?>
 
 - nano logout.php
 
@@ -327,3 +362,16 @@
             }
 
             check_auth();
+
+- nano js/custom.js
+
+        $("#signin-btn").on("click", function () {
+          $("#login-form").attr("action", "signin");
+          $("#username").removeAttr("required");
+          $("#password").removeAttr("required");
+          $("#login-form").submit();
+        });
+
+        $("#undo-btn").on("click", function () {
+          document.location.href = "login";
+        });
