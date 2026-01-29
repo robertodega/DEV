@@ -16,9 +16,8 @@ project_folders = [
 
 file_body_content = {
     ".htaccess":"RewriteEngine On\
-            \n\tRewriteRule ^login$ index.php?login=True [L]\
-            \n\tRewriteRule ^signin$ index.php?signin=True [L]\
-            \n\tRewriteRule ^logout$ logout.php [L]\
+            \n\tRewriteRule ^login$ index.php?login=true [L]\
+            \n\tRewriteRule ^signin$ index.php?signin=true [L]\
             \n\tRewriteRule ^dashboard$ dashboard.php [L]\
     ",
     "inc/functions.php":"<?php\
