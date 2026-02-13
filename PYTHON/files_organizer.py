@@ -1,7 +1,13 @@
 import os
+import platform
 import datetime
 
-os.system('cls')
+clear_command = 'clear'
+if platform.system() == "Windows":
+    clear_command = 'cls'
+os.system(clear_command)
+
+print(f"\n\n\tOperating System: {os.name} ( {platform.system()} )")
 
 def path_definition():
     images_dir = "images"
