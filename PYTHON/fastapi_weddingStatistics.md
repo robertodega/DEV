@@ -1,8 +1,8 @@
-#   filesystem construction
-mkdir webStatistics \
-&& cd webStatistics \
-&& mkdir DB static templates static/css static/js static/img \
-&& touch .gitignore .env DB/wedding_statistics.sql database.py models.py main.py const.py static/css/bootstrap.css static/css/main.css static/css/custom.css static/js/bootstrap.js static/js/jquery.js static/js/custom.js templates/base.html templates/selectionForm.html templates/updateForm.html templates/navbar.html templates/footer.html templates/index.html templates/confirmed.html templates/loadcsv.html
+# filesystem construction
+mkdir weddingStatistics \
+&& cd weddingStatistics \
+&& mkdir DB static templates static/css static/js static/img DOCS \
+&& touch .gitignore .env const.py requirements.txt DOCS/guests.csv OCS/guest_confirm.csv DB/wedding_statistics.sql database.py models.py main.py static/css/bootstrap.css static/css/main.css static/css/custom.css static/js/bootstrap.js static/js/jquery.js static/js/custom.js templates/base.html templates/selectionForm.html templates/updateForm.html templates/navbar.html templates/footer.html templates/index.html templates/confirmed.html templates/loadcsv.html
 
 - nano static/css/bootstrap.css
 
@@ -16,9 +16,17 @@ mkdir webStatistics \
 
         content from JS jquery cdn link ( https://code.jquery.com/jquery-4.0.0.min.js )
 
+- nano .env
+
+        DB_USER=root
+        DB_PASSWORD=
+        DB_HOST=localhost
+        DB_PORT=3306
+        DB_NAME=wedding_statistics
+
 - nano const.py
 
-        website_title = "IlDegaElaGio webStatistics"
+        website_title = "IlDegaElaGio weddingStatistics"
         rootpath = "./"
         menu_list_items = {
             "Home": "/",
@@ -34,20 +42,263 @@ mkdir webStatistics \
         present_title = "Presente"
         absent_title = "Assente"
 
+- nano requirements.txt
+
+    fastapi 
+    uvicorn 
+    jinja2 
+    requests 
+    python-multipart 
+    sqlalchemy 
+    pymysql 
+    python-dotenv
+    mysql-connector-python
+    pandas
+
+- nano DOCS/guests.csv
+
+        name,lastname,grade,adult
+        Giovanna,Fortugno,Family,1
+        Roberto,De Gaetano,Family,1
+        Giada,Piacenza,Family,1
+        Bruno,Fortugno,Family,1
+        Pina,Cortese,Family,1
+        Salvatore,De Gaetano,Family,1
+        Maria Rosa,Cangemi,Family,1
+        Felicia,Fortugno,Family,1
+        Sofia,Caravello,Family,1
+        Andrea,Caravello,Family,1
+        Daniele,De Gaetano,Family,1
+        Raluca,Danila,Family,1
+        Giuseppe,Cangemi,Zii,1
+        Ornella,Carretta,Zii,1
+        Stefano,Cangemi,Zii,1
+        Maria,Del Conte,Zii,1
+        Salvatore Lucio,Cangemi,Zii,1
+        Nella,Cangemi,Zii,1
+        Moreno,Trasforini,Zii,1
+        Pietro,De Gaetano,Zii,1
+        Tania,Ishchenko,Zii,1
+        Angelo,De Gaetano,Zii,1
+        Enzo,Cortese,Zii,1
+        Luisa,,Zii,1
+        Franca,Fortugno,Zii,1
+        Tiziano,,Zii,1
+        Rocco,Fortugno,Zii,1
+        Marinella,,Zii,1
+        Felicia,Fortugno,Zii,1
+        Antonella,Fortugno,Zii,1
+        Alessandro,Sapori,Silat,1
+        Maria Chiara,Sapori,Silat,1
+        Fabrizio,Zantomio,Silat,1
+        Matteo,Brambilla,Silat,1
+        Alessandro,Maestri,Silat,1
+        moglie,,Silat,1
+        Fabio,Raimondo,Silat,1
+        Chiara,Lanfranconi,Silat,1
+        Marco,Meraviglia,Silat,1
+        Andrea,Bonfadini,Silat,1
+        moglie,,Silat,1
+        Alessandro,Franci,Silat,1
+        Maria,moglie,Silat,1
+        Matteo,Musciagli,Silat,1
+        ragazza,,Silat,1
+        Adriano,,Silat,1
+        Francesco,Barbuto,Silat,1
+        Alessio,Bongiorno,Amici,1
+        Mara,Taddei,Amici,1
+        Davide,Bongiorno,Amici,1
+        Claudia,,Amici,1
+        Linda,Bongiorno,Amici,1
+        Cinzia,Bongiorno,Amici,1
+        Daniele,Caleca,Amici,1
+        Dario,Bongiorno,Amici,1
+        Sava,Perilli,Amici,1
+        Maila,,Amici,1
+        Andrea,Naples,Amici,1
+        Anita,Naples,Amici,1
+        Cristina,,Amici,1
+        Davide,,Amici,1
+        Angelica,,Amici,1
+        Maria Rosaria,Piscopiello,Amici,1
+        Dario,,Amici,1
+        Serena,Carcano,Amici,1
+        Massimo,,Amici,1
+        Lucia,,Amici,1
+        Alessandro,,Amici,1
+        Ornella,,Amici,1
+        Flavio,,Amici,1
+        Gaetana,Calabrese,Amici,1
+        Davide,Bezzi,Amici,1
+        Emma,Bezzi,Amici,1
+        Alice,Bezzi,Amici,1
+        Claire,Valdura,Colleghi,1
+        Sabrina,Campaci,Colleghi,1
+        Ilenia,Fregolent,Colleghi,1
+        Angela,Rinaldi,Colleghi,1
+        Assunta,Romano,Colleghi,1
+        Monica,Boschetti,Colleghi,1
+        Lorena,Lonzar,Colleghi,1
+        Cinzia,Colombo,Cugini,1
+        Cristian,Colombo,Cugini,1
+        Elisa,,Cugini,1
+        Flavio,Cangemi,Cugini,1
+        Brigitte,Ruzza,Cugini,1
+        Massimiliano,Cangemi,Cugini,1
+        Arianna,Cangemi,Cugini,1
+        compagno Arianna,,Cugini,1
+        Chiara,Cangemi,Cugini,1
+        Milena,Trasforini,Cugini,1
+        Tiziana,Trasforini,Cugini,1
+        Daniele,Pussini,Cugini,1
+        Emma,Agostini,Cugini,1
+        Roberto,Vecchio,Cugini,1
+        Leonardo,Manduzio,Cugini,1
+        Emiliano,Cangemi,Cugini,1
+        Sara,Brugognone,Cugini,1
+        Sandro,De Gaetano,Cugini,1
+        Massimo,De Gaetano,Cugini,1
+        Simone,Cortese,Cugini,1
+        Giorgia,,Cugini,1
+        Daniela,Fortugno,Cugini,1
+        Riccardo,,Cugini,1
+        Noemi,,Cugini,1
+        Katiuscia,,Cugini,1
+        Tazio,,Cugini,1
+        Ambra,De Gaetano,Bambini,0
+        Diego,Bongiorno,Bambini,0
+        Gaia,Bongiorno,Bambini,0
+        Francesco,Piscopiello,Bambini,0
+        Leonardo,Piscopiello,Bambini,0
+        Sara,Piscopiello,Bambini,0
+        Julia,Cangemi,Bambini,0
+        Filippo,Cangemi,Bambini,0
+
+- nano DOCS/guest_confirm.csv
+
+        guest_id,invite,confirmed,presence
+        1,1,1,1
+        2,1,1,1
+        3,1,1,1
+        4,1,1,1
+        5,1,1,1
+        6,1,1,1
+        7,1,1,1
+        8,1,1,1
+        9,1,1,1
+        10,1,1,1
+        11,1,1,1
+        12,1,1,1
+        13,1,1,1
+        14,1,1,1
+        15,1,1,1
+        16,1,1,1
+        17,1,1,1
+        18,1,1,1
+        19,1,1,1
+        20,1,0,0
+        21,1,0,0
+        22,1,0,0
+        23,0,0,0
+        24,0,0,0
+        25,1,1,1
+        26,1,1,1
+        27,0,0,0
+        28,0,0,0
+        29,0,0,0
+        30,0,0,0
+        31,1,0,0
+        32,1,0,0
+        33,1,0,0
+        34,1,0,0
+        35,1,1,1
+        36,1,1,1
+        37,1,1,1
+        38,1,1,1
+        39,1,0,0
+        40,0,0,0
+        41,0,0,0
+        42,0,0,0
+        43,0,0,0
+        44,1,0,0
+        45,1,0,0
+        46,1,0,0
+        47,1,0,0
+        48,1,1,1
+        49,1,1,1
+        50,0,0,0
+        51,0,0,0
+        52,0,0,0
+        53,0,0,0
+        54,0,0,0
+        55,0,0,0
+        56,0,0,0
+        57,1,1,1
+        58,1,1,1
+        59,1,1,1
+        60,1,1,1
+        61,1,1,1
+        62,1,1,1
+        63,1,1,1
+        64,1,1,1
+        65,1,1,1
+        66,1,1,1
+        67,1,1,0
+        68,1,1,1
+        69,0,0,0
+        70,0,0,0
+        71,1,1,1
+        72,1,1,1
+        73,1,1,1
+        74,1,1,1
+        75,1,1,1
+        76,1,1,1
+        77,1,1,1
+        78,1,1,1
+        79,1,1,1
+        80,1,1,1
+        81,1,1,1
+        82,1,0,0
+        83,1,0,0
+        84,1,0,0
+        85,1,1,1
+        86,1,1,1
+        87,1,1,1
+        88,1,0,0
+        89,1,0,0
+        90,1,1,1
+        91,1,1,1
+        92,1,0,0
+        93,1,0,0
+        94,1,0,0
+        95,1,0,0
+        96,1,0,0
+        97,1,1,1
+        98,1,1,1
+        99,1,0,0
+        100,1,0,0
+        101,0,0,0
+        102,0,0,0
+        103,0,0,0
+        104,0,0,0
+        105,1,0,0
+        106,1,0,0
+        107,1,0,0
+        108,1,1,1
+        109,1,0,0
+        110,1,0,0
+        111,1,0,0
+        112,1,0,0
+        113,1,0,0
+        114,1,1,1
+        115,1,0,0
+
 - nano .gitignore
 
         .env
         __pycache__/
         *.py[cod]
         *$py.class
-
-- nano .env
-
-        DB_USER=root
-        DB_PASSWORD=
-        DB_HOST=localhost
-        DB_PORT=3306
-        DB_NAME=wedding_statistics
 
 - nano database.py
 
@@ -120,13 +371,16 @@ mkdir webStatistics \
 
 - nano main.py
 
-        from fastapi import FastAPI, Request, Form, Depends, HTTPException
-        from fastapi.responses import RedirectResponse
+        import pandas as pd
+        from fastapi import FastAPI, Request, Form, UploadFile, File, HTTPException, Depends
+        from fastapi.responses import RedirectResponse, HTMLResponse
+        from sqlalchemy.orm import sessionmaker, Session
+        import io
         from sqlalchemy import text
-        from fastapi.responses import HTMLResponse
+        from pathlib import Path
         from fastapi.templating import Jinja2Templates
         from fastapi.staticfiles import StaticFiles
-        from typing import Annotated
+        from typing import Annotated, Optional
         from models import GuestConfirm
 
         import const
@@ -138,17 +392,61 @@ mkdir webStatistics \
         from database import engine, get_db
         import models
 
-        models.Base.metadata.create_all(bind=engine)        # Crea le tabelle nel DB se non esistono
+        models.Base.metadata.create_all(bind=engine)  # Crea le tabelle nel DB se non esistono
         """ """
 
         app = FastAPI()
         app.mount("/static", StaticFiles(directory="static"), name="static")
         templates = Jinja2Templates(directory="templates")
 
+
+        @app.post("/upload-csv/")
+        async def upload_csv(
+            request: Request, file: UploadFile = File(...), db: Session = Depends(get_db)
+        ):
+
+            if not file.filename.endswith(".csv"):
+                raise HTTPException(
+                    status_code=400, detail="File non valido. Caricare solo CSV."
+                )
+
+            csvfilename = file.filename
+            tablename = Path(csvfilename).stem
+
+            try:
+                contents = await file.read()
+                df = pd.read_csv(io.StringIO(contents.decode("utf-8")))
+
+                df.to_sql(name=tablename, con=engine, if_exists="append", index=False)
+
+                result_style = "success"
+                result_txt = "caricato con successo"
+
+            except Exception as e:
+                if "Duplicate entry" in str(e):
+                    result_style = "warning"
+                    result_txt = "Dati già presenti nel database"
+                else:
+                    result_style = "error"
+                    result_txt = "ERROR in inserimento dati: " + str(e)
+
+            context = {
+                "request": request,
+                "const": const,
+                "csvfilename": csvfilename,
+                "tablename": tablename,
+                "result_style": result_style,
+                "result_txt": result_txt,
+                "filename": file.filename,
+            }
+
+            return templates.TemplateResponse("loadcsv.html", context=context)
+
+
         @app.post("/")
         async def submit_form(request: Request, db: Session = Depends(get_db)):
 
-            form_data = await request.form()    
+            form_data = await request.form()
             column_name = form_data.get("column_field")
             new_value = form_data.get("value_field")
             record_id = form_data.get("id_field")
@@ -157,13 +455,14 @@ mkdir webStatistics \
             if not all([column_name, record_id]):
                 raise HTTPException(status_code=400, detail="Missing required form fields.")
 
-            db.query(GuestConfirm).filter(GuestConfirm.id == record_id).update({
-                column_name: new_value
-            })
-            
+            db.query(GuestConfirm).filter(GuestConfirm.id == record_id).update(
+                {column_name: new_value}
+            )
+
             db.commit()
 
             return RedirectResponse(url=redirect_url, status_code=303)
+
 
         @app.get("/", response_class=HTMLResponse)
         async def root(request: Request, db: Session = Depends(get_db)):
@@ -171,106 +470,261 @@ mkdir webStatistics \
             guests = db.query(models.Guests).all()
             guests_confirmed = db.query(models.GuestConfirm).all()
             guests_results = [
-                {**guest.__dict__, **next((confirm.__dict__ for confirm in guests_confirmed if confirm.guest_id == guest.id), {})}
+                {
+                    **guest.__dict__,
+                    **next(
+                        (
+                            confirm.__dict__
+                            for confirm in guests_confirmed
+                            if confirm.guest_id == guest.id
+                        ),
+                        {},
+                    ),
+                }
                 for guest in guests
             ]
 
-            total_num = len(guests_results)
-            confirmed_num = missing_num = pending_num = 0
-            for res in guests_results:
-                if res["confirmed"]:
-                    if res["presence"]:
-                        confirmed_num += 1
-                    else:
-                        missing_num += 1
-                else:
-                    pending_num += 1
+            confirmed_results = [
+                guest for guest in guests_results if guest.get("confirmed") == 1
+            ]
+            missing_results = [guest for guest in guests_results if guest.get("presence") == 0 and guest.get("confirmed") == 1]
+            pending_results = [guest for guest in guests_results if guest.get("confirmed") == 0]
+
+            results_count = len(guests_results)
+            confirmed_num = len(confirmed_results)
+            missing_num = len(missing_results)
+            pending_num = len(pending_results)
 
             context_data = {
                 "const": const,
-                "curpage": '',
-                "curpageLbl": '',
-                # "guests_results": guests_results,
-                "total_num": total_num,
+                "curpage": "",
+                "curpageLbl": "",
+                "results_count": results_count,
                 "confirmed_num": confirmed_num,
                 "missing_num": missing_num,
                 "pending_num": pending_num,
             }
 
             return templates.TemplateResponse(
-                request=request, 
-                name="index.html", 
-                context={"request": request, **context_data}
+                request=request, name="index.html", context={"request": request, **context_data}
             )
 
+
         @app.get("/confirmed", response_class=HTMLResponse)
-        async def get_confirmend(request: Request, db: Session = Depends(get_db)):
+        async def get_confirmed(request: Request, db: Session = Depends(get_db)):
 
             guests = db.query(models.Guests).all()
             guests_confirmed = db.query(models.GuestConfirm).all()
             guests_results = [
-                {**guest.__dict__, **next((confirm.__dict__ for confirm in guests_confirmed if confirm.guest_id == guest.id), {})}
+                {
+                    **guest.__dict__,
+                    **next(
+                        (
+                            confirm.__dict__
+                            for confirm in guests_confirmed
+                            if confirm.guest_id == guest.id
+                        ),
+                        {},
+                    ),
+                }
                 for guest in guests
             ]
 
-            sorted_names = sorted({res["name"] for res in guests_results if res["name"]})
-            sorted_lastnames = sorted({res["lastname"] for res in guests_results if res["lastname"]})
-            sorted_grades = sorted({res["grade"] for res in guests_results if res["grade"]})
+            results_count = len(guests_results)
+
+            sorted_names = sorted({res["name"] for res in guests_results if res.get("name")})
+            sorted_lastnames = sorted(
+                {res["lastname"] for res in guests_results if res.get("lastname")}
+            )
+            sorted_grades = sorted({res["grade"] for res in guests_results if res.get("grade")})
 
             context_data = {
                 "const": const,
-                "curpage": 'confirmed',
-                "curpageLbl": 'Conferme',
+                "curpage": "confirmed",
+                "curpageLbl": "Conferme",
                 "guests_results": guests_results,
+                "results_count": results_count,
                 "sorted_names": sorted_names,
                 "sorted_lastnames": sorted_lastnames,
                 "sorted_grades": sorted_grades,
             }
-            
+
             return templates.TemplateResponse(
-                request=request, 
-                name="confirmed.html", 
-                context={"request": request, **context_data}
+                request=request,
+                name="confirmed.html",
+                context={"request": request, **context_data},
             )
+
+
+        @app.post("/confirmed", response_class=HTMLResponse)
+        async def get_confirmed(
+            request: Request,
+            db: Session = Depends(get_db),
+            name: Optional[str] = Form(None),
+            lastname: Optional[str] = Form(None),
+            grade: Optional[str] = Form(None),
+            invited: Optional[str] = Form(None),
+            confirmed: Optional[str] = Form(None),
+            presence: Optional[str] = Form(None),
+        ):
+
+            guests = db.query(models.Guests).all()
+            guests_confirmed = db.query(models.GuestConfirm).all()
+            guests_results = [
+                {
+                    **guest.__dict__,
+                    **next(
+                        (
+                            confirm.__dict__
+                            for confirm in guests_confirmed
+                            if confirm.guest_id == guest.id
+                        ),
+                        {},
+                    ),
+                }
+                for guest in guests
+            ]
+
+            sorted_names = sorted({res["name"] for res in guests_results if res.get("name")})
+            sorted_lastnames = sorted(
+                {res["lastname"] for res in guests_results if res.get("lastname")}
+            )
+            sorted_grades = sorted({res["grade"] for res in guests_results if res.get("grade")})
+
+            selected_name = selected_lastname = selected_grade = selected_invited = (
+                selected_invited_field
+            ) = selected_confirmed = selected_confirmed_field = selected_presence = (
+                selected_presence_field
+            ) = ""
+            if name:
+                selected_name = name
+                guests_results = [
+                    g
+                    for g in guests_results
+                    if selected_name.lower() in g.get("name", "").lower()
+                ]
+
+            if lastname:
+                selected_lastname = lastname
+                guests_results = [
+                    g for g in guests_results if g.get("lastname") == selected_lastname
+                ]
+
+            if grade:
+                selected_grade = grade
+                guests_results = [g for g in guests_results if g.get("grade") == selected_grade]
+
+            if invited:
+                if invited == "Vero":
+                    selected_invited = 1
+                    selected_invited_field = "Invitato"
+                else:
+                    selected_invited = 0
+                    selected_invited_field = "NON Invitato"
+                guests_results = [
+                    g for g in guests_results if g.get("invite") == selected_invited
+                ]
+
+            if confirmed:
+                if confirmed == "Vero":
+                    selected_confirmed = 1
+                    selected_confirmed_field = "Confermato"
+                else:
+                    selected_confirmed = 0
+                    selected_confirmed_field = "NON Confermato"
+                guests_results = [
+                    g for g in guests_results if g.get("confirmed") == selected_confirmed
+                ]
+
+            if presence:
+                if presence == "Vero":
+                    selected_presence = 1
+                    selected_presence_field = "Presente"
+                else:
+                    selected_presence = 0
+                    selected_presence_field = "Assente"
+                guests_results = [
+                    g for g in guests_results if g.get("presence") == selected_presence
+                ]
+
+            results_count = len(guests_results)
+
+            context_data = {
+                "const": const,
+                "curpage": "confirmed",
+                "curpageLbl": "Conferme",
+                "guests_results": guests_results,
+                "results_count": results_count,
+                "sorted_names": sorted_names,
+                "sorted_lastnames": sorted_lastnames,
+                "sorted_grades": sorted_grades,
+                "selected_name": selected_name,
+                "selected_lastname": selected_lastname,
+                "selected_grade": selected_grade,
+                "selected_invited": selected_invited,
+                "selected_invited_field": selected_invited_field,
+                "selected_confirmed": selected_confirmed,
+                "selected_confirmed_field": selected_confirmed_field,
+                "selected_presence": selected_presence,
+                "selected_presence_field": selected_presence_field,
+            }
+
+            return templates.TemplateResponse(
+                request=request,
+                name="confirmed.html",
+                context={"request": request, **context_data},
+            )
+
 
         @app.get("/loadcsv", response_class=HTMLResponse)
         async def loadcsv(request: Request):
 
             context_data = {
                 "const": const,
-                "curpage": 'loadcsv',
-                "curpageLbl": 'Caricamento Massivo',
+                "curpage": "loadcsv",
+                "curpageLbl": "Caricamento Massivo",
             }
-            
+
             return templates.TemplateResponse(
-                request=request, 
-                name="loadcsv.html", 
-                context={"request": request, **context_data}
+                request=request,
+                name="loadcsv.html",
+                context={"request": request, **context_data},
             )
 
 - nano templates/selectionForm.html
 
         {% if curpage == "confirmed" %}
-        <div class="selection-form-div">
-            <form id="selection-form" name="selection-form" method="post" action="./" ref="selection">
+            {% set visibility_class = 'visible' %}
+        {% else %}
+            {% set visibility_class = 'hidden' %}
+        {% endif %}
+
+        <div class="selection-form-div {{ visibility_class }}">
+            <form id="selection-form" name="selection-form" method="post" action="./{{ curpage }}" ref="selection">
                 <input type="hidden" id="curpage_field" name="curpage_field" value="{{ curpage }}" />
                 <div class="selection-form-fields-div">
-                    <input type="text" class="selection-form-field" id="name" name="name" list="name_list" placeholder="Nome">
-                    <input type="text" class="selection-form-field" id="lastname" name="lastname" list="lastname_list"
-                        placeholder="Cognome">
-                    <input type="text" class="selection-form-field" id="grade" name="grade" list="grade_list"
-                        placeholder="Grado">
-                    <input type="text" class="selection-form-field" id="invited" name="invited" list="bool_list"
-                        placeholder="Invitato" onkeydown="return false;">
-                    <input type="text" class="selection-form-field" id="confirmed" name="confirmed" list="bool_list"
-                        placeholder="Confermato" onkeydown="return false;">
-                    <input type="text" class="selection-form-field" id="presence" name="presence" list="bool_list"
-                        placeholder="Presente" onkeydown="return false;">
+                    <input type="text" class="selection_form_field_input" id="name" name="name" list="name_list"
+                        placeholder="Nome" value="{{ selected_name }}">
+                    <input type="text" class="selection_form_field_input" id="lastname" name="lastname" list="lastname_list"
+                        placeholder="Cognome" value="{{ selected_lastname }}">
+                    <input type="text" class="selection_form_field_input" id="grade" name="grade" list="grade_list"
+                        placeholder="Grado" value="{{ selected_grade }}">
+                    <input type="text" class="selection_form_field_input" id="invited" name="invited" list="bool_list"
+                        placeholder="Invitato" value="{{ selected_invited_field }}">
+                    <input type="text" class="selection_form_field_input" id="confirmed" name="confirmed" list="bool_list"
+                        placeholder="Confermato" value="{{ selected_confirmed_field }}">
+                    <input type="text" class="selection_form_field_input" id="presence" name="presence" list="bool_list"
+                        placeholder="Presente" value="{{ selected_presence_field }}">
+                        
+                    <div class="counter-div"><span class="counter-num">{{ results_count }}</span></div>
+                    
                 </div>
-                <input class="form-act-btn resetBtn" type="reset" class="selection-form-field" id="reset" name="reset"
-                    value="Reset">
+                <input class="form-act-btn resetBtn" type="reset" class="selection_form_field_btn" id="reset-act-btn"
+                    name="reset" value="Reset">
+                
             </form>
         </div>
+        <!-- onkeydown="return false;" -->
 
         <datalist id="name_list">
             {% for name in sorted_names %}
@@ -294,20 +748,6 @@ mkdir webStatistics \
             <option value="Vero"></option>
             <option value="Falso"></option>
         </datalist>
-
-        {% endif %}
-
-        <script>
-            // $('.selection-form-field').each(function () {
-            //     $(this).on('change', function () {
-            //         const options = Array.from($('#' + $(this).attr('list')).options).map(opt => opt.value);
-            //         if (!options.includes(this.value)) {
-            //             alert("Per favore, seleziona un nome valido dalla lista.");
-            //             this.value = ''; // Resetta il campo
-            //         }
-            //     });
-            // });
-        </script>
         
 - nano templates/updateForm.html
 
@@ -344,7 +784,7 @@ mkdir webStatistics \
                 <div id="main">
                     <div class="inner">
                         <header id="header">
-                            <div class="header-div"><a href="./" class="logo"><strong>webStatistics</strong> by RobDega</a>
+                            <div class="header-div"><a href="./" class="logo"><strong>weddingStatistics</strong> by RobDega</a>
                                 <div class="header-div header-path-div">
                                     <a href='./'><span class="curpage-span">Home</span></a>
                                     <span class="curpage-span">{% if curpage != '' %} > {{ curpageLbl }} {% endif %}</span>
@@ -392,7 +832,16 @@ mkdir webStatistics \
             </header>
             <ul>
                 {% for item, ref in const.menu_list_items.items() %}
+                {% if item != 'CSV' %}
                 <li><a href="{{ ref }}">{{ item }}</a></li>
+                {% else %}
+                <div class="upload-csv-div">
+                    <form action="/upload-csv/" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" accept=".csv" required>
+                        <button type="submit">Carica CSV</button>
+                    </form>
+                </div>
+                {% endif %}
                 {% endfor %}
             </ul>
         </nav>
@@ -400,7 +849,7 @@ mkdir webStatistics \
 - nano template/footer.html
 
         <footer id="footer">
-            <p class="copyright">&copy; webStatistics by <a href="http://www.robertodegaetano.it/" target="_blank">RobDega</a>.</p>
+            <p class="copyright">&copy; weddingStatistics by <a href="http://www.robertodegaetano.it/" target="_blank">RobDega</a>.</p>
         </footer>
 
 - nano templates/index.html
@@ -409,10 +858,22 @@ mkdir webStatistics \
 
         {% block content %}
 
-        <div class="statistics-div" id="total-div">Totali invitati: <span class="stats-value">{{ total_num }}</span></div>
-        <div class="statistics-div" id="total-div">Confermati: <span class="stats-value">{{ confirmed_num }}</span></div>
-        <div class="statistics-div" id="total-div">Assenti: <span class="stats-value">{{ missing_num }}</span></div>
-        <div class="statistics-div" id="total-div">In Sospeso: <span class="stats-value">{{ pending_num }}</span></div>
+        <fieldset class="summary-fieldset">
+            <legend class="summary-fieldset-legend">Totali</legend>
+            <div class="statistics-div" id="total-div" ref="total">Totali invitati: <span class="stats-value">{{ results_count }}</span></div>
+        </fieldset>
+
+        <fieldset class="summary-fieldset">
+            <legend class="summary-fieldset-legend">Confermati ( <span class="confrmed-num-total">{{ confirmed_num }}</span> )</legend>
+            <div class="statistics-div" id="total-confirmed-div" ref="confirmed">Totali: <span class="stats-value">{{ confirmed_num }}</span></div>
+            <div class="statistics-div" id="total-confirmed-div" ref="present">Presenti: <span class="stats-value">{{ confirmed_num - missing_num }}</span></div>
+            <div class="statistics-div" id="total-missing-div" ref="notpresent">Assenti: <span class="stats-value">{{ missing_num }}</span></div>
+        </fieldset>
+
+        <fieldset class="summary-fieldset">
+            <legend class="summary-fieldset-legend">In Sospeso</legend>
+            <div class="statistics-div" id="total-pending-div"ref="pending">In Sospeso: <span class="stats-value">{{ pending_num }}</span></div>
+        </fieldset>
 
         {% endblock %}
 
@@ -437,7 +898,7 @@ mkdir webStatistics \
                 {% for result in guests_results %}
                 <tr>
                     <td class="table_cell">{{ result.name }}</td>
-                    <td class="table_cell">{{ result.lastname }}</td>
+                    <td class="table_cell">{% if result.lastname %}{{ result.lastname }}{% else %}{% endif %}</td>
                     <td class="table_cell">{{ result.grade }}</td>
                     <td class="table_cell desktop">
                         {% if result.invite %}
@@ -477,10 +938,12 @@ mkdir webStatistics \
 
 - nano templates/loadcsv.html
 
-        {% extends 'base.html' %}
+        {% extends "base.html" %}
 
         {% block content %}
-
+            <div class="result-div">
+                Result: <span class="result-span-{{ result_style }}">File <strong>{{ csvfilename }}</strong> {{ result_txt }} in tabella <strong>{{ tablename }}</strong></span>
+            </div>
         {% endblock %}
 
 - nano static/css/main.css
@@ -3626,6 +4089,13 @@ mkdir webStatistics \
           color: darkcyan;
         }
 
+        .visible {
+          display: block;
+        }
+        .hidden {
+          display: none;
+        }
+
         header {
           display: flex;
           .header-div {
@@ -3638,14 +4108,28 @@ mkdir webStatistics \
           }
         }
 
+        .upload-csv-div {
+          border-top: 1px solid orange;
+          padding: 10px;
+        }
+
         .content {
           .content-div {
+            .counter-div {
+              font-size: 1.5rem;
+
+              .counter-num {
+                font-weight: bold;
+                color: darkcyan;
+              }
+            }
+
             .selection-form-div {
               .selection-form-fields-div {
                 display: flex;
                 gap: 10px;
 
-                .selection-form-field {
+                .selection_form_field_input {
                   cursor: pointer;
                   width: 15%;
                 }
@@ -3657,7 +4141,7 @@ mkdir webStatistics \
             }
 
             .content-values-div {
-              height: 450px;
+              height: 420px;
               overflow: auto;
 
               .desktop {
@@ -3666,13 +4150,30 @@ mkdir webStatistics \
                 }
               }
 
+              .summary-fieldset {
+                border: 1px solid black;
+                margin: 10px;
+                .summary-fieldset-legend {
+                  border: 0px solid black;
+                  padding: 12px;
+                  color: darkcyan;
+
+                  .confrmed-num-total{
+                    color: orangered;
+                    font-weight: bold;
+                  }
+                }
+              }
+
               .statistics-div {
                 background-color: whitesmoke;
-                border-bottom: 1px solid grey;
+                /* border-bottom: 1px solid grey;
                 box-shadow: 0px 0px 2px 2px orangered;
                 padding: 10px;
-                margin: 10px;
-                font-size: 2rem;
+                margin: 10px; */
+                padding-left: 20px;
+                font-size: 1.3rem;
+                cursor: pointer;
 
                 .stats-value {
                   font-weight: bold;
@@ -3697,6 +4198,51 @@ mkdir webStatistics \
 
 - nano static/js/custom.js
 
+        $(".statistics-div").each(function () {
+          $(this).on("click", function () {
+            switch ($(this).attr("ref")) {
+              case "confirmed":
+                {
+                  $("#confirmed").val("Vero");
+                }
+                break;
+              case "present":
+                {
+                  $("#confirmed").val("Vero");
+                  $("#presence").val("Vero");
+                }
+                break;
+              case "notpresent":
+                {
+                  $("#confirmed").val("Vero");
+                  $("#presence").val("Falso");
+                }
+                break;
+              case "pending":
+                {
+                  $("#confirmed").val("Falso");
+                }
+                break;
+            }
+            $("#selection-form").attr("action", "/confirmed");
+            $("#selection-form").submit();
+          });
+        });
+
+        $(".selection_form_field_input").each(function () {
+          $(this).on("click", function () {
+            $("#" + $(this).attr("id")).val("");
+          });
+          $(this).on("change", function () {
+            $("#selection-form").submit();
+          });
+        });
+
+        $("#reset-act-btn").on("click", function () {
+          $(".selection_form_field_input").val("");
+          $("#selection-form").submit();
+        });
+
         $(".ico_act_img").each(function () {
           $(this).on("click", function () {
             switch ($(this).attr("functionality")) {
@@ -3706,10 +4252,9 @@ mkdir webStatistics \
                 break;
               case "update":
                 {
-                  const valueField = $(this).attr("value") == '1' ? "True" : "False";
-                  const newValueField = $(this).attr("value") == '1' ? "False" : "True";
-                  const newValueDbField = $(this).attr("value") == '1' ? "0" : "1";
-                //   const newValueDbField = $(this).attr("value") == '1' ? "false" : "true";
+                  const valueField = $(this).attr("value") == "1" ? "True" : "False";
+                  const newValueField = $(this).attr("value") == "1" ? "False" : "True";
+                  const newValueDbField = $(this).attr("value") == "1" ? "0" : "1";
                   if (
                     window.confirm(
                       "Modificare " +
@@ -3732,16 +4277,17 @@ mkdir webStatistics \
           });
         });
 
-#   app run
+# app run
+
 - python3 -m venv venv
 - Windows:
     -   source venv/Scripts/activate
 - Linux:
     -   source venv/bin/activate
-
-- pip3 install fastapi uvicorn jinja2 requests python-multipart sqlalchemy pymysql python-dotenv
-
+- pip3 install -r requirements.txt
 - uvicorn main:app --reload
-- http://127.0.0.1:8000
 
-- cd .. && rm -rf webStatistics && clear && ls -la
+# app folder removal
+
+- cd ../ && rm -rf weddingStatistics && deactivate
+
