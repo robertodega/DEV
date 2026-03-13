@@ -2,7 +2,7 @@
 mkdir weddingStatistics \
 && cd weddingStatistics \
 && mkdir DB static templates static/css static/js static/img DOCS \
-&& touch .gitignore .env const.py requirements.txt DOCS/guests.csv OCS/guest_confirm.csv DB/wedding_statistics.sql database.py models.py main.py static/css/bootstrap.css static/css/main.css static/css/custom.css static/js/bootstrap.js static/js/jquery.js static/js/custom.js templates/base.html templates/selectionForm.html templates/updateForm.html templates/navbar.html templates/footer.html templates/index.html templates/confirmed.html templates/loadcsv.html
+&& touch .gitignore .env const.py requirements.txt DOCS/guests.csv DOCS/guest_confirm.csv DB/wedding_statistics.sql database.py models.py main.py static/css/bootstrap.css static/css/main.css static/css/custom.css static/js/bootstrap.js static/js/jquery.js static/js/custom.js templates/base.html templates/selectionForm.html templates/updateForm.html templates/navbar.html templates/footer.html templates/index.html templates/confirmed.html templates/loadcsv.html
 
 - nano static/css/bootstrap.css
 
