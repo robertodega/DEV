@@ -2,7 +2,9 @@
 
 python3 -m venv pytorch_env \
 && source pytorch_env/bin/activate\
-&& pip3 install torch torchvision torchaudio # --index-url https://download.pytorch.org/whl/cpu    #   WITHOUT NVIDIA GPU
+&& pip3 install torch torchvision torchaudio \
+--index-url https://download.pytorch.org/whl/cpu # WITHOUT NVIDIA GPU
+&& source pytorch_env/bin/activate
 
 - check installation
 
