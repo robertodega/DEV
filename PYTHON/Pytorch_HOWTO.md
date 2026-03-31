@@ -1,20 +1,18 @@
-- python3 -m venv pytorch_env
-- source pytorch_env/bin/activate
-- Without NVIDIA video card
-    -   pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+- installation
 
-- With NVIDIA video card
-    -   pip3 install torch torchvision torchaudio
+python3 -m venv pytorch_env \
+&& source pytorch_env/bin/activate\
+&& pip3 install torch torchvision torchaudio # --index-url https://download.pytorch.org/whl/cpu    #   WITHOUT NVIDIA GPU
 
 - check installation
 
-        import torch
+        python3
 
+        import torch 
         x = torch.rand(5, 3)
-        print(x)
 
-        print(f"Versione PyTorch: {torch.__version__}")
-        print(f"CUDA disponibile: {torch.cuda.is_available()}")
-
+        print(f'x:\n\t{x}', f'PyTorch Version:\n\t{torch.__version__}', f'CUDA disponibile: {torch.cuda.is_available()}', sep='\n\n')
         if torch.cuda.is_available():
             print(f"GPU rilevata: {torch.cuda.get_device_name(0)}")
+        else:
+            print(f"GPU NON rilevata")
